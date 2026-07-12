@@ -5,56 +5,62 @@ let products = [];
 const deals = [
     {
         id: 101,
-        title: "عرض محدود - مجموعة المنزل الذكي",
-        image: "https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=600",
-        badge: "خصم 60%",
-        price: 49.99,
-        originalPrice: 129.99,
+        title: "آلة إزالة الشعر بالليزر IPL 4 في 1",
+        image: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=400",
+        badge: "خصم 52%",
+        price: 9.33,
+        originalPrice: 19.46,
+        affiliateLink: "https://s.click.aliexpress.com/e/_c3pXxbBv",
         endsIn: 86400 * 2 + 3600 * 5
     },
     {
         id: 102,
-        title: "مجموعة الصيف - عروض الأزياء",
-        image: "https://images.unsplash.com/photo-1445205170230-053b83016050?w=600",
-        badge: "خصم 45%",
-        price: 29.99,
-        originalPrice: 54.99,
+        title: "جهاز فحص السيارات MUCAR BT200 Max OBD2",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400",
+        badge: "خصم 43%",
+        price: 7.28,
+        originalPrice: 12.68,
+        affiliateLink: "https://s.click.aliexpress.com/e/_c3pXxbBv",
         endsIn: 86400 + 3600 * 12
     },
     {
         id: 103,
-        title: "تخفيضات كبيرة على الأجهزة التقنية",
-        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600",
-        badge: "خصم 70%",
-        price: 19.99,
-        originalPrice: 66.99,
+        title: "قرص خارجي محمول KODAK P190 500GB USB 3.0",
+        image: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=400",
+        badge: "خصم 50%",
+        price: 4.41,
+        originalPrice: 8.84,
+        affiliateLink: "https://s.click.aliexpress.com/e/_c3pXxbBv",
         endsIn: 3600 * 8 + 1800
     },
     {
         id: 104,
-        title: "سماعات لاسلكية برو ماكس",
-        image: "https://images.unsplash.com/photo-1590658268037-6bf12f032f55?w=600",
-        badge: "خصم 55%",
-        price: 15.99,
-        originalPrice: 35.99,
+        title: "ماوس ألعاب لاسلكي ATK A9 Pro 8K",
+        image: "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400",
+        badge: "خصم 52%",
+        price: 3.20,
+        originalPrice: 6.65,
+        affiliateLink: "https://s.click.aliexpress.com/e/_c3pXxbBv",
         endsIn: 86400 * 3 + 3600 * 2
     },
     {
         id: 105,
-        title: "ساعة ذكية رياضية متقدمة",
-        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600",
-        badge: "خصم 50%",
-        price: 24.99,
-        originalPrice: 49.99,
+        title: "هاتف Realme 15 Pro 5G بشاشة AMOLED 144Hz",
+        image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400",
+        badge: "جديد",
+        price: 121.50,
+        originalPrice: 121.51,
+        affiliateLink: "https://s.click.aliexpress.com/e/_c3pXxbBv",
         endsIn: 86400 + 3600 * 6
     },
     {
         id: 106,
-        title: "شاحن لاسلكي أنيق 3 في 1",
-        image: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600",
-        badge: "خصم 40%",
-        price: 12.99,
-        originalPrice: 21.99,
+        title: "مجموعة دراجات هوائية رجالي 3D",
+        image: "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=400",
+        badge: "خصم 8%",
+        price: 2.93,
+        originalPrice: 3.19,
+        affiliateLink: "https://s.click.aliexpress.com/e/_c3pXxbBv",
         endsIn: 3600 * 10 + 1800
     }
 ];
@@ -229,6 +235,9 @@ function renderDeals(dealsToRender) {
                     <div class="timer-box"><span class="minutes">00</span><small>دقائق</small></div>
                     <div class="timer-box"><span class="seconds">00</span><small>ثواني</small></div>
                 </div>
+                <a href="${deal.affiliateLink || '#'}" target="_blank" rel="noopener" class="deal-buy-btn">
+                    <i class="fas fa-shopping-cart"></i> شراء الآن
+                </a>
             </div>
         </div>
     `).join('');
