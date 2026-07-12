@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: dz-express
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py
+    envVars:
+      - key: API_SECRET
+        sync: false
+
+  - type: worker
+    name: dz-express-bot
+    runtime: python
+    buildCommand: pip install -r bot/requirements.txt
+    startCommand: python bot/bot.py
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: ALIEXPRESS_API_PUBLIC
+        sync: false
+      - key: ALIEXPRESS_API_SECRET
+        sync: false
+      - key: WEBSITE_URL
+        sync: false
+      - key: API_SECRET
+        value: dzexpress-secret-2024

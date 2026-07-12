@@ -11,25 +11,16 @@
     <header class="header">
         <nav class="nav container">
             <a href="#" class="logo">
-                <i class="fas fa-bolt"></i>
-                DZ Express
+                <img src="logo.png" alt="DZ Express" class="logo-img">
             </a>
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="ابحث عن المنتجات...">
-                <button id="searchBtn"><i class="fas fa-search"></i></button>
-            </div>
-            <div class="nav-links">
-                <a href="#products">المنتجات</a>
-                <a href="#categories">الأقسام</a>
-                <a href="#deals">العروض</a>
-            </div>
             <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" title="تبديل الوضع">
+                    <i class="fas fa-moon"></i>
+                </button>
                 <button class="mobile-search-btn" id="mobileSearchBtn" title="بحث">
                     <i class="fas fa-search"></i>
                 </button>
-                <button class="dark-mode-btn" id="darkModeBtn" title="الوضع الداكن">
-                    <i class="fas fa-moon"></i>
-                </button>
+
                 <button class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -44,12 +35,42 @@
         </div>
     </header>
 
+    <div class="categories-bar" id="categories">
+        <div class="container">
+            <div class="categories-grid">
+                <button class="category-btn active" data-category="all">
+                    <i class="fas fa-th-large"></i>
+                    <span>الكل</span>
+                </button>
+                <button class="category-btn" data-category="electronics">
+                    <i class="fas fa-microchip"></i>
+                    <span>إلكترونيات</span>
+                </button>
+                <button class="category-btn" data-category="fashion">
+                    <i class="fas fa-tshirt"></i>
+                    <span>أزياء</span>
+                </button>
+                <button class="category-btn" data-category="home">
+                    <i class="fas fa-home"></i>
+                    <span>المنزل</span>
+                </button>
+                <button class="category-btn" data-category="beauty">
+                    <i class="fas fa-spa"></i>
+                    <span>جمال</span>
+                </button>
+                <button class="category-btn" data-category="gadgets">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>أجهزة</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
     <div class="mobile-menu-panel" id="mobileMenuPanel">
         <div class="mobile-menu-header">
             <a href="#" class="logo">
-                <i class="fas fa-bolt"></i>
-                DZ Express
+                <img src="logo.png" alt="DZ Express" class="logo-img">
             </a>
             <button class="mobile-menu-close" id="mobileMenuClose">
                 <i class="fas fa-times"></i>
@@ -81,56 +102,124 @@
     </div>
 
     <section class="hero">
-        <div class="container">
-            <h1>اكتشف عروض مذهلة</h1>
-            <p>ابحث عن أفضل المنتجات من علي إكسبريس بأسعار لا تُقاوم</p>
-            <a href="#products" class="btn-primary">تسوق الآن</a>
-        </div>
-    </section>
-
-    <section class="categories" id="categories">
-        <div class="container">
-            <h2 class="section-title">تسوق حسب القسم</h2>
-            <div class="categories-grid">
-                <button class="category-btn active" data-category="all">
-                    <i class="fas fa-th-large"></i>
-                    <span>الكل</span>
-                </button>
-                <button class="category-btn" data-category="electronics">
-                    <i class="fas fa-microchip"></i>
-                    <span>إلكترونيات</span>
-                </button>
-                <button class="category-btn" data-category="fashion">
-                    <i class="fas fa-tshirt"></i>
-                    <span>أزياء</span>
-                </button>
-                <button class="category-btn" data-category="home">
-                    <i class="fas fa-home"></i>
-                    <span>المنزل</span>
-                </button>
-                <button class="category-btn" data-category="beauty">
-                    <i class="fas fa-spa"></i>
-                    <span>جمال</span>
-                </button>
-                <button class="category-btn" data-category="gadgets">
-                    <i class="fas fa-mobile-alt"></i>
-                    <span>أجهزة</span>
-                </button>
+        <div class="hero-slideshow" id="heroSlideshow"></div>
+        <div class="hero-overlay"></div>
+        <a href="https://s.click.aliexpress.com/e/_c3JvjH4F?bz=1920*500" target="_blank" class="hero-banner-link">
+            <img src="baner nwe.png" alt="عروض الصيف" class="hero-banner-bg">
+        </a>
+        <div class="countdown-bar" id="countdownBar">
+            <div class="countdown-label">تبقى لبداية العرض</div>
+            <div class="countdown-digits">
+                <div class="cd-unit"><span class="cd-num" id="cdDays">00</span><span class="cd-tag">يوم</span></div>
+                <div class="cd-sep">:</div>
+                <div class="cd-unit"><span class="cd-num" id="cdHours">00</span><span class="cd-tag">ساعة</span></div>
+                <div class="cd-sep">:</div>
+                <div class="cd-unit"><span class="cd-num" id="cdMinutes">00</span><span class="cd-tag">دقيقة</span></div>
+                <div class="cd-sep">:</div>
+                <div class="cd-unit"><span class="cd-num" id="cdSeconds">00</span><span class="cd-tag">ثانية</span></div>
             </div>
         </div>
     </section>
 
-    <section class="deals" id="deals">
-        <div class="container">
-            <h2 class="section-title"><i class="fas fa-fire"></i> العروض الساخنة</h2>
-            <div class="deals-slider" id="dealsSlider">
-                <!-- Hot deals will be inserted here -->
+    <div class="hero-coupons-top">
+        <div class="hero-coupons-track" id="heroCouponsTrack">
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'AFV2')">
+                <span class="hcp-amount">$2</span>
+                <span class="hcp-cond">فوق $15</span>
+                <span class="hcp-code">AFV2</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'DZJS2')">
+                <span class="hcp-amount">$2</span>
+                <span class="hcp-cond">فوق $15</span>
+                <span class="hcp-code">DZJS2</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'AFV4')">
+                <span class="hcp-amount">$4</span>
+                <span class="hcp-cond">فوق $30</span>
+                <span class="hcp-code">AFV4</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'DZJS4')">
+                <span class="hcp-amount">$4</span>
+                <span class="hcp-cond">فوق $30</span>
+                <span class="hcp-code">DZJS4</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'AFV9')">
+                <span class="hcp-amount">$9</span>
+                <span class="hcp-cond">فوق $65</span>
+                <span class="hcp-code">AFV9</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'DZJS9')">
+                <span class="hcp-amount">$9</span>
+                <span class="hcp-cond">فوق $65</span>
+                <span class="hcp-code">DZJS9</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'AFV15')">
+                <span class="hcp-amount">$15</span>
+                <span class="hcp-cond">فوق $120</span>
+                <span class="hcp-code">AFV15</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'DZJS15')">
+                <span class="hcp-amount">$15</span>
+                <span class="hcp-cond">فوق $120</span>
+                <span class="hcp-code">DZJS15</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'AFV25')">
+                <span class="hcp-amount">$25</span>
+                <span class="hcp-cond">فوق $209</span>
+                <span class="hcp-code">AFV25</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'DZJS25')">
+                <span class="hcp-amount">$25</span>
+                <span class="hcp-cond">فوق $209</span>
+                <span class="hcp-code">DZJS25</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'AFV40')">
+                <span class="hcp-amount">$40</span>
+                <span class="hcp-cond">فوق $329</span>
+                <span class="hcp-code">AFV40</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'DZJS40')">
+                <span class="hcp-amount">$40</span>
+                <span class="hcp-cond">فوق $329</span>
+                <span class="hcp-code">DZJS40</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'AFV55')">
+                <span class="hcp-amount">$55</span>
+                <span class="hcp-cond">فوق $449</span>
+                <span class="hcp-code">AFV55</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
+            </div>
+            <div class="hero-coupon-pill" onclick="copyCouponCode(this, 'DZJS55')">
+                <span class="hcp-amount">$55</span>
+                <span class="hcp-cond">فوق $449</span>
+                <span class="hcp-code">DZJS55</span>
+                <span class="hcp-icon"><i class="fas fa-copy"></i></span>
             </div>
         </div>
-    </section>
+    </div>
+
 
     <section class="products" id="products">
         <div class="container">
+            <div class="products-search" id="productsSearch">
+                <div class="search-input-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="ابحث عن المنتجات..." autocomplete="off">
+                    <button class="search-clear" id="searchClear" style="display:none;"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
             <h2 class="section-title">المنتجات المميزة</h2>
             <div class="products-grid" id="productsGrid">
                 <!-- Products will be inserted here -->
@@ -138,14 +227,34 @@
         </div>
     </section>
 
-    <section class="newsletter">
+    <section class="deals" id="deals">
         <div class="container">
-            <h2>احصل على عروض حصرية</h2>
-            <p>اشترك لتلقي أفضل العروض مباشرة في بريدك الإلكتروني</p>
-            <form class="newsletter-form" id="newsletterForm">
-                <input type="email" placeholder="أدخل بريدك الإلكتروني" required>
-                <button type="submit" class="btn-primary">اشترك الآن</button>
-            </form>
+            <h2 class="section-title"><i class="fas fa-fire"></i> العروض الساخنة</h2>
+            <div class="deals-carousel">
+                <button class="deals-arrow deals-prev" id="dealsPrev"><i class="fas fa-chevron-right"></i></button>
+                <div class="deals-track-wrapper">
+                    <div class="deals-slider" id="dealsSlider">
+                        <!-- Hot deals will be inserted here -->
+                    </div>
+                </div>
+                <button class="deals-arrow deals-next" id="dealsNext"><i class="fas fa-chevron-left"></i></button>
+                <div class="deals-dots" id="dealsDots"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ad-banner">
+        <div class="container">
+            <div class="ad-banner-inner">
+                <span class="ad-label">إعلان</span>
+                <div class="ad-content">
+                    <h2>مساحة إعلانية</h2>
+                    <p>هذا المكان متاح للإعلانات - تواصل معنا للنشر</p>
+                </div>
+                <div class="ad-placeholder">
+                    <i class="fas fa-ad"></i>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -153,20 +262,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3><i class="fas fa-bolt"></i> DZ Express</h3>
+                    <h3><i class="fas fa-shopping-basket"></i> DZ Express</h3>
                     <p>مصدرك الموثوق لأفضل عروض علي إكسبريس وتوصيات المنتجات.</p>
-                </div>
-                <div class="footer-col">
-                    <h4>روابط سريعة</h4>
-                    <a href="#products">المنتجات</a>
-                    <a href="#categories">الأقسام</a>
-                    <a href="#deals">العروض</a>
-                </div>
-                <div class="footer-col">
-                    <h4>الأقسام</h4>
-                    <a href="#" data-category="electronics">إلكترونيات</a>
-                    <a href="#" data-category="fashion">أزياء</a>
-                    <a href="#" data-category="home">المنزل والحديقة</a>
                 </div>
                 <div class="footer-col">
                     <h4>تابعنا</h4>
@@ -184,24 +281,23 @@
         </div>
     </footer>
 
-    <div class="modal" id="productModal">
-        <div class="modal-content">
-            <button class="modal-close" id="modalClose">&times;</button>
-            <div class="modal-body">
-                <div class="modal-image">
-                    <img id="modalImage" src="" alt="">
-                </div>
-                <div class="modal-info">
-                    <h2 id="modalTitle"></h2>
-                    <div class="modal-rating" id="modalRating"></div>
-                    <p class="modal-price" id="modalPrice"></p>
-                    <p class="modal-description" id="modalDescription"></p>
-                    <a href="#" class="btn-primary btn-deal" id="modalLink" target="_blank" rel="nofollow sponsored">
-                        <i class="fas fa-shopping-cart"></i> شاهد على علي إكسبريس
-                    </a>
-                    <p class="affiliate-disclosure">* كشريك في علي إكسبرس، نكسب من المشتريات المؤهلة</p>
-                </div>
+    <div class="coupon-modal" id="couponModal">
+        <div class="coupon-modal-content">
+            <button class="coupon-modal-close" id="couponModalClose">&times;</button>
+            <div class="coupon-icon"><i class="fas fa-ticket-alt"></i></div>
+            <h3>كوبون خصم متاح!</h3>
+            <p>انسخ الكود التالي واستخدمه عند الشراء للحصول على خصم إضافي</p>
+            <div class="coupon-code-box">
+                <span id="couponCodeText">CODE</span>
+                <button class="coupon-copy-btn" id="couponCopyBtn">
+                    <i class="fas fa-copy"></i> نسخ
+                </button>
             </div>
+            <p class="coupon-note" id="couponNoCode" style="display:none;">لا يوجد كوبون متاح لهذا المنتج</p>
+            <a href="#" class="btn-primary btn-deal coupon-go-btn" id="couponGoBtn" target="_blank" rel="nofollow sponsored">
+                <i class="fas fa-shopping-cart"></i> متابعة للشراء
+            </a>
+            <p class="affiliate-disclosure">* كشريك في علي إكسبرس، نكسب من المشتريات المؤهلة</p>
         </div>
     </div>
 
@@ -209,6 +305,7 @@
         <i class="fas fa-arrow-up"></i>
     </a>
 
+    <script src="api-config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

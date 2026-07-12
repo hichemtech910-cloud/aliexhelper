@@ -1,168 +1,12 @@
 // Sample Products Data - Replace with your AliExpress affiliate links
-const products = [
-    {
-        id: 1,
-        title: "سماعات بلوتوث لاسلكية برو",
-        category: "electronics",
-        price: 12.99,
-        originalPrice: 29.99,
-        rating: 4.8,
-        reviews: 2541,
-        image: "https://images.unsplash.com/photo-1590658268037-6bf12f032f55?w=400",
-        badge: "الأكثر مبيعاً",
-        description: "سماعات لاسلكية عالية الجودة مع خاصية إلغاء الضوضاء وعمر بطارية 24 ساعة. مثالية لعشاق الموسيقى والمهنيين.",
-        affiliateLink: "https://aliexpress.com/item/YOUR_PRODUCT_ID.html?aff_platform=YOUR_AFFILIATE_ID"
-    },
-    {
-        id: 2,
-        title: "ساعة ذكية متعددة الوظائف",
-        category: "gadgets",
-        price: 24.99,
-        originalPrice: 49.99,
-        rating: 4.7,
-        reviews: 1893,
-        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
-        badge: "-50%",
-        description: "ساعة ذكية متكاملة الميزات مع مراقبة ضربات القلب وGPS وعمر بطارية 7 أيام.",
-        affiliateLink: "https://aliexpress.com/item/YOUR_PRODUCT_ID.html?aff_platform=YOUR_AFFILIATE_ID"
-    },
-    {
-        id: 3,
-        title: "سماعة بلوتوث محمولة",
-        category: "electronics",
-        price: 18.50,
-        originalPrice: 35.00,
-        rating: 4.6,
-        reviews: 3210,
-        image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400",
-        badge: "رائجة",
-        description: "سماعة محمولة مقاومة للماء مع صوت 360 درجة ووقت تشغيل 12 ساعة.",
-        affiliateLink: "https://aliexpress.com/item/YOUR_PRODUCT_ID.html?aff_platform=YOUR_AFFILIATE_ID"
-    },
-    {
-        id: 4,
-        title: "إضاءة LED حلقة مع حامل",
-        category: "home",
-        price: 15.99,
-        originalPrice: 32.00,
-        rating: 4.9,
-        reviews: 4521,
-        image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400",
-        badge: "الأعلى تقييماً",
-        description: "إضاءة LED احترافية بقطر 10 بوصات مثالية للبث المباشر والتصوير ومكياج.",
-        affiliateLink: "https://aliexpress.com/item/YOUR_PRODUCT_ID.html?aff_platform=YOUR_AFFILIATE_ID"
-    },
-    {
-        id: 5,
-        title: "مجموعة أوشحة حريرية أنيقة",
-        category: "fashion",
-        price: 8.99,
-        originalPrice: 19.99,
-        rating: 4.5,
-        reviews: 892,
-        image: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=400",
-        badge: "جديد",
-        description: "أوشحة حريرية أنيقة بتصاميم جميلة. إكسسوارات مثالية لأي إطلالة.",
-        affiliateLink: "https://aliexpress.com/item/YOUR_PRODUCT_ID.html?aff_platform=YOUR_AFFILIATE_ID"
-    },
-    {
-        id: 6,
-        title: "مجموعة العناية بالبشرة فاخرة",
-        category: "beauty",
-        price: 19.99,
-        originalPrice: 45.00,
-        rating: 4.8,
-        reviews: 1567,
-        image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400",
-        badge: "شائعة",
-        description: "روتين عناية بالبشرة كامل يشمل التونر والسيروم والمرطب.",
-        affiliateLink: "https://aliexpress.com/item/YOUR_PRODUCT_ID.html?aff_platform=YOUR_AFFILIATE_ID"
-    },
-    {
-        id: 7,
-        title: "محول USB-C متعدد المنافذ",
-        category: "gadgets",
-        price: 22.99,
-        originalPrice: 42.00,
-        rating: 4.7,
-        reviews: 2134,
-        image: "https://images.unsplash.com/photo-1625842268584-8f3296236761?w=400",
-        badge: "أساسي",
-        description: "محول USB-C بـ 7 منافذ مع HDMI ومنافذ USB 3.0 وقارئ بطاقات SD.",
-        affiliateLink: "https://aliexpress.com/item/YOUR_PRODUCT_ID.html?aff_platform=YOUR_AFFILIATE_ID"
-    },
-    {
-        id: 8,
-        title: "مجموعة أصص نباتات سيراميك",
-        category: "home",
-        price: 14.99,
-        originalPrice: 28.00,
-        rating: 4.6,
-        reviews: 987,
-        image: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=400",
-        badge: "صديق للبيئة",
-        description: "مجموعة من 3 أصص سيراميك عصرية مع ثقوب تصريف. مثالية للنباتات المنزلية.",
-        affiliateLink: "https://aliexpress.com/item/YOUR_PRODUCT_ID.html?aff_platform=YOUR_AFFILIATE_ID"
-    },
-    {
-        id: 9,
-        title: "حذاء رياضي بسيط وأنيق",
-        category: "fashion",
-        price: 16.99,
-        originalPrice: 34.99,
-        rating: 4.5,
-        reviews: 3456,
-        image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400",
-        badge: "رائج",
-        description: "حذاء رياضي مريح مع نعل مبطن بال-memory foam. متوفر بعدة ألوان.",
-        affiliateLink: "https://aliexpress.com/item/YOUR_PRODUCT_ID.html?aff_platform=YOUR_AFFILIATE_ID"
-    },
-    {
-        id: 10,
-        title: "جهاز عرض فيديو مصغر HD",
-        category: "electronics",
-        price: 39.99,
-        originalPrice: 79.99,
-        rating: 4.4,
-        reviews: 1234,
-        image: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400",
-        badge: "-50%",
-        description: "جهاز عرض فيديو محمول بدقة 1080p. مثالي لمشاهدة الأفلام والعرض التقديمي.",
-        affiliateLink: "https://aliexpress.com/item/YOUR_PRODUCT_ID.html?aff_platform=YOUR_AFFILIATE_ID"
-    },
-    {
-        id: 11,
-        title: "مجموعة أدوات تصفيف الشعر",
-        category: "beauty",
-        price: 28.99,
-        originalPrice: 55.00,
-        rating: 4.7,
-        reviews: 876,
-        image: "https://images.unsplash.com/photo-1522338242992-e1a54571a7c8?w=400",
-        badge: "مجموعة كاملة",
-        description: "أدوات تصفيف الشعر الاحترافية تشمل مكواة الفرد والتجعيد والمجفف.",
-        affiliateLink: "https://aliexpress.com/item/YOUR_PRODUCT_ID.html?aff_platform=YOUR_AFFILIATE_ID"
-    },
-    {
-        id: 12,
-        title: "شاحن لاسلكي سريع",
-        category: "gadgets",
-        price: 9.99,
-        originalPrice: 19.99,
-        rating: 4.6,
-        reviews: 2890,
-        image: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=400",
-        badge: "شحن سريع",
-        description: "شاحن لاسلكي 15 واط سريع متوافق مع جميع الأجهزة المدعومة بـ Qi.",
-        affiliateLink: "https://aliexpress.com/item/YOUR_PRODUCT_ID.html?aff_platform=YOUR_AFFILIATE_ID"
-    }
-];
+const USD_TO_DZD = 135;
+let products = [];
 
 const deals = [
     {
         id: 101,
         title: "عرض محدود - مجموعة المنزل الذكي",
-        image: "https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=400",
+        image: "https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=600",
         badge: "خصم 60%",
         price: 49.99,
         originalPrice: 129.99,
@@ -171,7 +15,7 @@ const deals = [
     {
         id: 102,
         title: "مجموعة الصيف - عروض الأزياء",
-        image: "https://images.unsplash.com/photo-1445205170230-053b83016050?w=400",
+        image: "https://images.unsplash.com/photo-1445205170230-053b83016050?w=600",
         badge: "خصم 45%",
         price: 29.99,
         originalPrice: 54.99,
@@ -180,11 +24,38 @@ const deals = [
     {
         id: 103,
         title: "تخفيضات كبيرة على الأجهزة التقنية",
-        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400",
+        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600",
         badge: "خصم 70%",
         price: 19.99,
         originalPrice: 66.99,
         endsIn: 3600 * 8 + 1800
+    },
+    {
+        id: 104,
+        title: "سماعات لاسلكية برو ماكس",
+        image: "https://images.unsplash.com/photo-1590658268037-6bf12f032f55?w=600",
+        badge: "خصم 55%",
+        price: 15.99,
+        originalPrice: 35.99,
+        endsIn: 86400 * 3 + 3600 * 2
+    },
+    {
+        id: 105,
+        title: "ساعة ذكية رياضية متقدمة",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600",
+        badge: "خصم 50%",
+        price: 24.99,
+        originalPrice: 49.99,
+        endsIn: 86400 + 3600 * 6
+    },
+    {
+        id: 106,
+        title: "شاحن لاسلكي أنيق 3 في 1",
+        image: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600",
+        badge: "خصم 40%",
+        price: 12.99,
+        originalPrice: 21.99,
+        endsIn: 3600 * 10 + 1800
     }
 ];
 
@@ -201,12 +72,17 @@ const categoryLabels = {
 // State
 let currentCategory = 'all';
 let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-let isDarkMode = localStorage.getItem('darkMode') === 'true';
+let serverProducts = [];
+let allProducts = [...products, ...serverProducts];
 
 // DOM Elements
 const productsGrid = document.getElementById('productsGrid');
 const dealsSlider = document.getElementById('dealsSlider');
+const dealsPrev = document.getElementById('dealsPrev');
+const dealsNext = document.getElementById('dealsNext');
+const dealsDots = document.getElementById('dealsDots');
 const searchInput = document.getElementById('searchInput');
+const searchClear = document.getElementById('searchClear');
 const searchBtn = document.getElementById('searchBtn');
 const categoryBtns = document.querySelectorAll('.category-btn');
 const modal = document.getElementById('productModal');
@@ -220,21 +96,90 @@ const mobileSearchInput = document.getElementById('mobileSearchInput');
 const mobileSearchSubmit = document.getElementById('mobileSearchSubmit');
 const mobileSearchClose = document.getElementById('mobileSearchClose');
 const backToTop = document.getElementById('backToTop');
-const darkModeBtn = document.getElementById('darkModeBtn');
 
 // Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    // Apply saved dark mode
-    if (isDarkMode) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        darkModeBtn.innerHTML = '<i class="fas fa-sun"></i>';
-    }
+document.addEventListener('DOMContentLoaded', async () => {
+    initCountdown();
     
-    renderProducts(products);
-    renderDeals(deals);
     initEventListeners();
+    try { await fetchProducts(); } catch(e) {}
+    try { renderDeals(deals); } catch(e) {}
     startDealTimers();
+    initHeroSlideshow();
+    initHeroCoupons();
 });
+
+// Fetch products from API
+async function fetchProducts() {
+    try {
+        const res = await fetch('/api/products');
+        serverProducts = await res.json();
+    } catch (e) {
+        serverProducts = [];
+    }
+    allProducts = [...products, ...serverProducts];
+    renderProducts(allProducts);
+}
+
+// Hero Slideshow
+function initHeroSlideshow() {
+    const slideshow = document.getElementById('heroSlideshow');
+    const heroImages = [
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200",
+        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200",
+        "https://images.unsplash.com/photo-1546868871-af0de0ae72be?w=1200",
+        "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=1200",
+        "https://images.unsplash.com/photo-1585298723682-7115561c51b7?w=1200",
+        "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=1200"
+    ];
+    
+    heroImages.forEach((img, i) => {
+        const slide = document.createElement('div');
+        slide.className = 'slide' + (i === 0 ? ' active' : '');
+        slide.style.backgroundImage = `url(${img})`;
+        slideshow.appendChild(slide);
+    });
+
+    let currentHeroSlide = 0;
+    const slides = slideshow.querySelectorAll('.slide');
+
+    setInterval(() => {
+        slides[currentHeroSlide].classList.remove('active');
+        currentHeroSlide = (currentHeroSlide + 1) % slides.length;
+        slides[currentHeroSlide].classList.add('active');
+    }, 3000);
+}
+
+function initHeroCoupons() {
+    const track = document.getElementById('heroCouponsTrack');
+    if (!track) return;
+    const pills = track.innerHTML;
+    track.innerHTML = pills + pills;
+}
+
+function initCountdown() {
+    const target = new Date('2026-07-13T00:00:00').getTime();
+    const dEl = document.getElementById('cdDays');
+    const hEl = document.getElementById('cdHours');
+    const mEl = document.getElementById('cdMinutes');
+    const sEl = document.getElementById('cdSeconds');
+    if (!dEl) return;
+
+    function tick() {
+        const now = Date.now();
+        let diff = Math.max(0, target - now);
+        const d = Math.floor(diff / 86400000); diff %= 86400000;
+        const h = Math.floor(diff / 3600000); diff %= 3600000;
+        const m = Math.floor(diff / 60000); diff %= 60000;
+        const s = Math.floor(diff / 1000);
+        dEl.textContent = String(d).padStart(2, '0');
+        hEl.textContent = String(h).padStart(2, '0');
+        mEl.textContent = String(m).padStart(2, '0');
+        sEl.textContent = String(s).padStart(2, '0');
+    }
+    tick();
+    setInterval(tick, 1000);
+}
 
 // Render Products
 function renderProducts(productsToRender) {
@@ -243,24 +188,22 @@ function renderProducts(productsToRender) {
             <div class="product-image">
                 <img src="${product.image}" alt="${product.title}" loading="lazy">
                 <span class="product-badge">${product.badge}</span>
-                <button class="product-wishlist ${wishlist.includes(product.id) ? 'active' : ''}" data-id="${product.id}">
-                    <i class="fas fa-heart"></i>
-                </button>
             </div>
             <div class="product-info">
                 <span class="product-category">${categoryLabels[product.category] || product.category}</span>
-                <h3 class="product-title">${product.title}</h3>
+                <h3 class="product-title">${product.shortTitle || product.title}</h3>
                 <div class="product-rating">
                     ${renderStars(product.rating)}
                     <span>(${product.reviews})</span>
                 </div>
                 <div class="product-price">
                     <span class="current-price">$${product.price.toFixed(2)}</span>
+                    <span class="current-price-dzd">${Math.round(product.price * USD_TO_DZD)} دج</span>
                     <span class="original-price">$${product.originalPrice.toFixed(2)}</span>
                     <span class="discount">-${Math.round((1 - product.price / product.originalPrice) * 100)}%</span>
                 </div>
-                <button class="product-btn" onclick="openProductModal(${product.id})">
-                    <i class="fas fa-eye"></i> عرض سريع
+                <button class="product-btn product-btn-buy" onclick="openCouponModal(${product.id})">
+                    <i class="fas fa-shopping-cart"></i> شراء الآن
                 </button>
             </div>
         </div>
@@ -277,6 +220,7 @@ function renderDeals(dealsToRender) {
                 <h3>${deal.title}</h3>
                 <p class="product-price" style="margin: 15px 0;">
                     <span class="current-price">$${deal.price.toFixed(2)}</span>
+                    <span class="current-price-dzd">${Math.round(deal.price * USD_TO_DZD)} دج</span>
                     <span class="original-price">$${deal.originalPrice.toFixed(2)}</span>
                 </p>
                 <div class="deal-timer" data-ends="${deal.endsIn}">
@@ -292,8 +236,9 @@ function renderDeals(dealsToRender) {
 
 // Render Stars
 function renderStars(rating) {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 >= 0.5;
+    const r = parseFloat(rating) || 0;
+    const fullStars = Math.floor(r);
+    const hasHalfStar = r % 1 >= 0.5;
     let stars = '';
     
     for (let i = 0; i < fullStars; i++) {
@@ -318,18 +263,37 @@ function initEventListeners() {
             btn.classList.add('active');
             currentCategory = btn.dataset.category;
             filterProducts();
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
 
     // Search
-    searchBtn.addEventListener('click', filterProducts);
-    searchInput.addEventListener('keyup', (e) => {
-        if (e.key === 'Enter') filterProducts();
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            if (searchClear) searchClear.style.display = searchInput.value ? 'flex' : 'none';
+            filterProducts();
+        });
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                const wrapper = document.querySelector('.search-input-wrapper');
+                if (wrapper) { wrapper.classList.remove('searching'); void wrapper.offsetWidth; wrapper.classList.add('searching'); }
+            }
+        });
+        searchInput.addEventListener('focus', () => {
+            if (searchClear) searchClear.style.display = searchInput.value ? 'flex' : 'none';
+        });
+    }
+    if (searchClear) searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchClear.style.display = 'none';
+        filterProducts();
+        searchInput.focus();
     });
 
     // Modal close
-    document.getElementById('modalClose').addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
+    const modalCloseBtn = document.getElementById('modalClose');
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+    if (modal) modal.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
     });
 
@@ -343,22 +307,42 @@ function initEventListeners() {
         }
     });
 
-    // Back to top
+    // Back to top + header hide on scroll
+    let lastScroll = 0;
+    const header = document.querySelector('.header');
+    const categoriesBar = document.querySelector('.categories-bar');
     window.addEventListener('scroll', () => {
-        backToTop.classList.toggle('visible', window.scrollY > 500);
+        const currentScroll = window.scrollY;
+        if (currentScroll > lastScroll && currentScroll > 100) {
+            header.classList.add('header-hidden');
+            if (categoriesBar) categoriesBar.classList.add('bar-top');
+        } else {
+            header.classList.remove('header-hidden');
+            if (categoriesBar) categoriesBar.classList.remove('bar-top');
+        }
+        lastScroll = currentScroll;
+        backToTop.classList.toggle('visible', currentScroll > 500);
     });
 
-    // Newsletter form
-    document.getElementById('newsletterForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('شكراً لاشتراكك! تحقق من بريدك الإلكتروني للحصول على العروض الحصرية.');
-        e.target.reset();
-    });
+    // Dark mode toggle
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+    }
 
     // Mobile menu
-    mobileMenuBtn.addEventListener('click', openMobileMenu);
-    mobileMenuClose.addEventListener('click', closeMobileMenu);
-    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
+    if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
+    if (mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMobileMenu);
 
     // Mobile menu links - close menu on click
     document.querySelectorAll('.mobile-menu-link').forEach(link => {
@@ -366,26 +350,23 @@ function initEventListeners() {
     });
 
     // Mobile search
-    mobileSearchBtn.addEventListener('click', toggleMobileSearch);
-    mobileSearchClose.addEventListener('click', closeMobileSearch);
-    mobileSearchSubmit.addEventListener('click', () => {
-        searchInput.value = mobileSearchInput.value;
+    if (mobileSearchBtn) mobileSearchBtn.addEventListener('click', toggleMobileSearch);
+    if (mobileSearchClose) mobileSearchClose.addEventListener('click', closeMobileSearch);
+    if (mobileSearchSubmit) mobileSearchSubmit.addEventListener('click', () => {
+        if (searchInput) searchInput.value = mobileSearchInput.value;
         filterProducts();
         closeMobileSearch();
     });
-    mobileSearchInput.addEventListener('keyup', (e) => {
+    if (mobileSearchInput) mobileSearchInput.addEventListener('keyup', (e) => {
         if (e.key === 'Enter') {
-            searchInput.value = mobileSearchInput.value;
+            if (searchInput) searchInput.value = mobileSearchInput.value;
             filterProducts();
             closeMobileSearch();
         }
     });
 
-    // Dark mode toggle
-    darkModeBtn.addEventListener('click', toggleDarkMode);
-
-    // Touch swipe for deals slider
-    initDealsSwipe();
+    // Deals carousel
+    initDealsCarousel();
 }
 
 // Mobile Menu
@@ -414,70 +395,96 @@ function closeMobileSearch() {
     mobileSearchInput.value = '';
 }
 
-// Deals touch swipe
-function initDealsSwipe() {
-    let startX = 0;
-    let scrollLeft = 0;
-    let isDown = false;
+// Deals Carousel
+let currentSlide = 0;
+let slidesPerView = 3;
+let totalSlides = 0;
+let autoSlideInterval;
 
-    dealsSlider.addEventListener('mousedown', (e) => {
-        isDown = true;
-        startX = e.pageX - dealsSlider.offsetLeft;
-        scrollLeft = dealsSlider.scrollLeft;
-        dealsSlider.style.cursor = 'grabbing';
+function initDealsCarousel() {
+    updateSlidesPerView();
+    totalSlides = deals.length;
+    renderDots();
+    updateCarousel();
+
+    dealsPrev.addEventListener('click', () => {
+        currentSlide = Math.max(0, currentSlide - 1);
+        updateCarousel();
+        resetAutoSlide();
     });
 
-    dealsSlider.addEventListener('mouseleave', () => {
-        isDown = false;
-        dealsSlider.style.cursor = 'grab';
+    dealsNext.addEventListener('click', () => {
+        const maxSlide = Math.max(0, totalSlides - slidesPerView);
+        currentSlide = Math.min(maxSlide, currentSlide + 1);
+        updateCarousel();
+        resetAutoSlide();
     });
 
-    dealsSlider.addEventListener('mouseup', () => {
-        isDown = false;
-        dealsSlider.style.cursor = 'grab';
+    window.addEventListener('resize', () => {
+        updateSlidesPerView();
+        const maxSlide = Math.max(0, totalSlides - slidesPerView);
+        if (currentSlide > maxSlide) currentSlide = maxSlide;
+        renderDots();
+        updateCarousel();
     });
 
-    dealsSlider.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - dealsSlider.offsetLeft;
-        const walk = (x - startX) * 1.5;
-        dealsSlider.scrollLeft = scrollLeft - walk;
-    });
+    startAutoSlide();
+}
 
-    // Touch events
-    dealsSlider.addEventListener('touchstart', (e) => {
-        isDown = true;
-        startX = e.touches[0].pageX - dealsSlider.offsetLeft;
-        scrollLeft = dealsSlider.scrollLeft;
-    });
+function updateSlidesPerView() {
+    if (window.innerWidth <= 480) {
+        slidesPerView = 1;
+    } else if (window.innerWidth <= 768) {
+        slidesPerView = 2;
+    } else {
+        slidesPerView = 3;
+    }
+}
 
-    dealsSlider.addEventListener('touchend', () => {
-        isDown = false;
-    });
+function updateCarousel() {
+    const cardWidth = dealsSlider.querySelector('.deal-card')?.offsetWidth || 300;
+    const gap = 20;
+    const offset = currentSlide * (cardWidth + gap);
+    dealsSlider.style.transform = `translateX(${offset}px)`;
 
-    dealsSlider.addEventListener('touchmove', (e) => {
-        if (!isDown) return;
-        const x = e.touches[0].pageX - dealsSlider.offsetLeft;
-        const walk = (x - startX) * 1.5;
-        dealsSlider.scrollLeft = scrollLeft - walk;
+    document.querySelectorAll('.deals-dots .dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
     });
+}
 
-    dealsSlider.style.cursor = 'grab';
+function renderDots() {
+    const dotCount = Math.max(1, totalSlides - slidesPerView + 1);
+    dealsDots.innerHTML = '';
+    for (let i = 0; i < dotCount; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'dot' + (i === currentSlide ? ' active' : '');
+        dot.addEventListener('click', () => {
+            currentSlide = i;
+            updateCarousel();
+            resetAutoSlide();
+        });
+        dealsDots.appendChild(dot);
+    }
+}
+
+function startAutoSlide() {
+    autoSlideInterval = setInterval(() => {
+        const maxSlide = Math.max(0, totalSlides - slidesPerView);
+        currentSlide = currentSlide >= maxSlide ? 0 : currentSlide + 1;
+        updateCarousel();
+    }, 4000);
+}
+
+function resetAutoSlide() {
+    clearInterval(autoSlideInterval);
+    startAutoSlide();
 }
 
 // Dark Mode Toggle
-function toggleDarkMode() {
-    isDarkMode = !isDarkMode;
-    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
-    darkModeBtn.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    localStorage.setItem('darkMode', isDarkMode);
-}
-
 // Filter Products
 function filterProducts() {
     const searchTerm = searchInput.value.toLowerCase();
-    let filtered = products;
+    let filtered = allProducts;
     
     if (currentCategory !== 'all') {
         filtered = filtered.filter(p => p.category === currentCategory);
@@ -496,7 +503,7 @@ function filterProducts() {
 
 // Modal Functions
 function openProductModal(productId) {
-    const product = products.find(p => p.id === productId);
+    const product = allProducts.find(p => p.id === productId);
     if (!product) return;
     
     document.getElementById('modalImage').src = product.image;
@@ -507,13 +514,14 @@ function openProductModal(productId) {
     `;
     document.getElementById('modalPrice').innerHTML = `
         $${product.price.toFixed(2)}
+        <span class="modal-price-dzd">${Math.round(product.price * USD_TO_DZD)} دج</span>
         <span style="text-decoration: line-through; color: var(--text-muted); font-size: 1rem; margin-left: 10px;">$${product.originalPrice.toFixed(2)}</span>
         <span style="background: rgba(255, 71, 87, 0.1); color: #ff4757; padding: 3px 8px; border-radius: 5px; font-size: 0.9rem; margin-left: 10px;">
             وفّر ${Math.round((1 - product.price / product.originalPrice) * 100)}%
         </span>
     `;
     document.getElementById('modalDescription').textContent = product.description;
-    document.getElementById('modalLink').href = product.affiliateLink;
+    document.getElementById('modalLink').href = toAffiliateLink(product.affiliateLink);
     
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -523,6 +531,59 @@ function closeModal() {
     modal.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
+
+// Coupon Modal
+const couponModal = document.getElementById('couponModal');
+const couponCodeText = document.getElementById('couponCodeText');
+const couponCopyBtn = document.getElementById('couponCopyBtn');
+const couponGoBtn = document.getElementById('couponGoBtn');
+const couponNoCode = document.getElementById('couponNoCode');
+
+function openCouponModal(productId) {
+    const product = allProducts.find(p => p.id === productId);
+    if (!product) return;
+
+    if (product.coupon) {
+        couponCodeText.textContent = product.coupon;
+        couponCodeText.style.display = 'inline';
+        couponCopyBtn.style.display = 'flex';
+        couponNoCode.style.display = 'none';
+    } else {
+        couponCodeText.style.display = 'none';
+        couponCopyBtn.style.display = 'none';
+        couponNoCode.style.display = 'block';
+    }
+
+    couponGoBtn.href = toAffiliateLink(product.affiliateLink);
+    couponCopyBtn.classList.remove('copied');
+    couponCopyBtn.innerHTML = '<i class="fas fa-copy"></i> نسخ';
+
+    couponModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCouponModal() {
+    couponModal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+couponModal.addEventListener('click', (e) => {
+    if (e.target === couponModal) closeCouponModal();
+});
+
+document.getElementById('couponModalClose').addEventListener('click', closeCouponModal);
+
+couponCopyBtn.addEventListener('click', () => {
+    const code = couponCodeText.textContent;
+    navigator.clipboard.writeText(code).then(() => {
+        couponCopyBtn.classList.add('copied');
+        couponCopyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
+        setTimeout(() => {
+            couponCopyBtn.classList.remove('copied');
+            couponCopyBtn.innerHTML = '<i class="fas fa-copy"></i> نسخ';
+        }, 2000);
+    });
+});
 
 // Wishlist
 function toggleWishlist(productId) {
@@ -566,7 +627,68 @@ function startDealTimers() {
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeModal();
+        closeCouponModal();
         closeMobileMenu();
         closeMobileSearch();
     }
 });
+
+function copyCoupon(el) {
+    const code = el.textContent;
+    navigator.clipboard.writeText(code).then(() => {
+        el.classList.add('copied');
+        const original = el.innerHTML;
+        el.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => {
+            el.classList.remove('copied');
+            el.innerHTML = original;
+        }, 1500);
+    });
+}
+
+function copyCouponCode(el, code) {
+    navigator.clipboard.writeText(code).then(() => {
+        el.classList.add('copied');
+        const flash = document.createElement('span');
+        flash.className = 'copied-flash';
+        el.appendChild(flash);
+        const icon = el.querySelector('.hcp-icon');
+        if (icon) icon.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => {
+            el.classList.remove('copied');
+            if (flash.parentNode) flash.remove();
+            if (icon) icon.innerHTML = '<i class="fas fa-copy"></i>';
+        }, 1500);
+    });
+}
+
+// Auto-scroll coupon slider
+const couponsScroll = document.querySelector('.coupons-scroll');
+
+function scrollCoupons(dir) {
+    if (!couponsScroll) return;
+    const scrollAmount = 250;
+    couponsScroll.scrollBy({ left: dir === 'right' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+}
+
+if (couponsScroll) {
+    let scrollDir = 1;
+    let scrollPaused = false;
+
+    couponsScroll.addEventListener('mouseenter', () => scrollPaused = true);
+    couponsScroll.addEventListener('mouseleave', () => scrollPaused = false);
+    couponsScroll.addEventListener('touchstart', () => scrollPaused = true);
+    couponsScroll.addEventListener('touchend', () => {
+        setTimeout(() => scrollPaused = false, 2000);
+    });
+
+    setInterval(() => {
+        if (scrollPaused) return;
+        if (couponsScroll.scrollLeft + couponsScroll.clientWidth >= couponsScroll.scrollWidth) {
+            scrollDir = -1;
+        } else if (couponsScroll.scrollLeft <= 0) {
+            scrollDir = 1;
+        }
+        couponsScroll.scrollLeft += scrollDir;
+    }, 30);
+}

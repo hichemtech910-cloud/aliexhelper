@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DZ Express - إضافة منتج</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+        .admin-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        .admin-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .admin-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+        .admin-header p {
+            color: var(--text-muted);
+        }
+        .url-input-box {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+        }
+        .url-input-box h3 {
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        .url-row {
+            display: flex;
+            gap: 10px;
+        }
+        .url-row input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid var(--light);
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+        .url-row input:focus {
+            border-color: var(--primary);
+        }
+        .url-row button {
+            padding: 14px 25px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .url-row button:hover {
+            background: var(--primary-dark);
+        }
+        .url-row button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .status-msg {
+            margin-top: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .status-msg.loading {
+            display: block;
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+        .status-msg.success {
+            display: block;
+            background: rgba(39, 174, 96, 0.1);
+            color: #27ae60;
+        }
+        .status-msg.error {
+            display: block;
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+        .form-box {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+        .form-box h3 {
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--light);
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+        }
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+        .btn-save {
+            flex: 1;
+            padding: 14px;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(39, 174, 96, 0.3);
+        }
+        .btn-reset {
+            padding: 14px 25px;
+            background: var(--light);
+            color: var(--text-color);
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-reset:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+        .saved-products {
+            margin-top: 30px;
+        }
+        .saved-products h3 {
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        .saved-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .saved-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            padding: 12px 16px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        .saved-item-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .saved-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .saved-item-title {
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        .saved-item-price {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        .saved-item-delete {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 5px;
+            transition: var(--transition);
+        }
+        .saved-item-delete:hover {
+            transform: scale(1.2);
+        }
+        .empty-msg {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 20px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        .back-link:hover {
+            gap: 12px;
+        }
+        @media (max-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .url-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-shopping-basket"></i>
+                DZ Express
+            </a>
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-right"></i> العودة للموقع
+            </a>
+        </nav>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1><i class="fas fa-plus-circle" style="color: var(--primary);"></i> إضافة منتج جديد</h1>
+            <p>الصق رابط المنتج من علي إكسبريس وسيتم استخراج البيانات تلقائياً</p>
+        </div>
+
+        <div class="url-input-box">
+            <h3><i class="fas fa-link"></i> رابط المنتج</h3>
+            <div class="url-row">
+                <input type="text" id="productUrl" placeholder="الصق رابط المنتج من علي إكسبريس هنا...">
+                <button id="fetchBtn" onclick="fetchProduct()">
+                    <i class="fas fa-download"></i> استخراج
+                </button>
+            </div>
+            <div class="status-msg" id="statusMsg"></div>
+        </div>
+
+        <div class="form-box">
+            <h3><i class="fas fa-edit"></i> بيانات المنتج</h3>
+            <form id="productForm" onsubmit="saveProduct(event)">
+                <div class="form-group">
+                    <label>اسم المنتج</label>
+                    <input type="text" id="pTitle" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>القسم</label>
+                        <select id="pCategory">
+                            <option value="electronics">إلكترونيات</option>
+                            <option value="fashion">أزياء</option>
+                            <option value="home">المنزل</option>
+                            <option value="beauty">جمال</option>
+                            <option value="gadgets">أجهزة</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>الشارة (Badge)</label>
+                        <input type="text" id="pBadge" placeholder="مثلاً: الأكثر مبيعاً">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>السعر الحالي ($)</label>
+                        <input type="number" step="0.01" id="pPrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>السعر الأصلي ($)</label>
+                        <input type="number" step="0.01" id="pOriginalPrice">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>التقييم (0-5)</label>
+                        <input type="number" step="0.1" min="0" max="5" id="pRating" value="4.5">
+                    </div>
+                    <div class="form-group">
+                        <label>عدد التقييمات</label>
+                        <input type="number" id="pReviews" value="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>رابط الصورة</label>
+                    <input type="text" id="pImage" placeholder="رابط صورة المنتج">
+                </div>
+                <div class="form-group">
+                    <label>الوصف</label>
+                    <textarea id="pDescription"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>رابط الإحالة (AliExpress)</label>
+                        <input type="text" id="pAffiliateLink" placeholder="رابط شراء المنتج">
+                    </div>
+                    <div class="form-group">
+                        <label>كوبون الخصم</label>
+                        <input type="text" id="pCoupon" placeholder="رمز الكوبون (اختياري)">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">
+                        <i class="fas fa-save"></i> حفظ المنتج
+                    </button>
+                    <button type="button" class="btn-reset" onclick="resetForm()">
+                        <i class="fas fa-undo"></i> مسح
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="saved-products">
+            <h3><i class="fas fa-box-open"></i> المنتجات المحفوظة</h3>
+            <div class="saved-list" id="savedList"></div>
+        </div>
+    </div>
+
+    <script src="api-config.js"></script>
+    <script>
+        let savedProducts = JSON.parse(localStorage.getItem('customProducts')) || [];
+
+        function showStatus(msg, type) {
+            const el = document.getElementById('statusMsg');
+            el.textContent = msg;
+            el.className = 'status-msg ' + type;
+        }
+
+        function extractIdFromUrl(url) {
+            const patterns = [
+                /\/item\/(\d+)\.html/,
+                /\/item\/(\d+)/,
+                /productId=(\d+)/,
+                /(\d{10,})/
+            ];
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return match[1];
+            }
+            return null;
+        }
+
+        async function fetchProduct() {
+            const url = document.getElementById('productUrl').value.trim();
+            if (!url) {
+                showStatus('الرجاء إدخال رابط المنتج', 'error');
+                return;
+            }
+
+            if (!url.includes('aliexpress.com')) {
+                showStatus('الرجاء إدخال رابط من علي إكسبريس فقط', 'error');
+                return;
+            }
+
+            const fetchBtn = document.getElementById('fetchBtn');
+            fetchBtn.disabled = true;
+            showStatus('جاري استخراج البيانات من علي إكسبريس...', 'loading');
+
+            try {
+                const response = await fetch(`http://localhost:8001/api/product?url=${encodeURIComponent(url)}`);
+                const data = await response.json();
+
+                if (data.error) {
+                    showStatus('خطأ: ' + data.error + '. تأكد من إعداد API في api-server.py', 'error');
+                    return;
+                }
+
+                // Fill form from API data
+                if (data.product_title) document.getElementById('pTitle').value = data.product_title;
+                if (data.target_sale_price) {
+                    document.getElementById('pPrice').value = data.target_sale_price;
+                    const orig = data.target_original_price || (parseFloat(data.target_sale_price) * 2).toFixed(2);
+                    document.getElementById('pOriginalPrice').value = orig;
+                }
+                if (data.product_main_image_url) document.getElementById('pImage').value = data.product_main_image_url;
+                if (data.product_detail_url) document.getElementById('pAffiliateLink').value = data.product_detail_url;
+                if (data.first_level_category_name) {
+                    const catMap = {'Electronics': 'electronics', 'Consumer Electronics': 'electronics', 'Computer & Office': 'electronics', 'Phones & Telecommunications': 'electronics', 'Home & Garden': 'home', 'Beauty & Health': 'beauty', 'Jewelry & Accessories': 'fashion', 'Women's Clothing & Accessories': 'fashion', "Men's Clothing & Accessories": 'fashion', 'Toys & Hobbies': 'gadgets', 'Sports & Entertainment': 'gadgets'};
+                    const cat = catMap[data.first_level_category_name] || 'electronics';
+                    document.getElementById('pCategory').value = cat;
+                }
+                if (data.average_star) document.getElementById('pRating').value = data.average_star;
+                if (data.total_review) document.getElementById('pReviews').value = data.total_review;
+                if (data.promotion_info && data.promotion_info.coupon_promotion_url) {
+                    // coupon from API
+                }
+
+                const fields = [data.product_title, data.target_sale_price, data.product_main_image_url].filter(Boolean).length;
+                showStatus(`تم استخراج ${fields} حقول من علي إكسبريس بنجاح! راجع البيانات`, 'success');
+
+            } catch (err) {
+                showStatus('خطأ في الاتصال بخادم API. تأكد من تشغيل api-server.py', 'error');
+            }
+
+            fetchBtn.disabled = false;
+        }
+
+        function saveProduct(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('pTitle').value.trim();
+            const price = parseFloat(document.getElementById('pPrice').value);
+            const originalPrice = parseFloat(document.getElementById('pOriginalPrice').value) || price;
+            const category = document.getElementById('pCategory').value;
+            const badge = document.getElementById('pBadge').value.trim() || 'جديد';
+            const rating = parseFloat(document.getElementById('pRating').value) || 4.5;
+            const reviews = parseInt(document.getElementById('pReviews').value) || 0;
+            const image = document.getElementById('pImage').value.trim();
+            const description = document.getElementById('pDescription').value.trim();
+            const affiliateLink = toAffiliateLink(document.getElementById('pAffiliateLink').value.trim());
+            const coupon = document.getElementById('pCoupon').value.trim();
+
+            const maxId = savedProducts.reduce((max, p) => Math.max(max, p.id), 100);
+            const newProduct = {
+                id: maxId + 1,
+                title,
+                category,
+                price,
+                originalPrice,
+                rating,
+                reviews,
+                image: image || 'https://via.placeholder.com/400x400?text=No+Image',
+                badge,
+                description: description || title,
+                affiliateLink: affiliateLink || '#',
+                coupon
+            };
+
+            savedProducts.push(newProduct);
+            localStorage.setItem('customProducts', JSON.stringify(savedProducts));
+            renderSavedProducts();
+            resetForm();
+            showStatus('تم حفظ المنتج بنجاح!他会出现在 الموقع الرئيسي.', 'success');
+        }
+
+        function deleteProduct(id) {
+            savedProducts = savedProducts.filter(p => p.id !== id);
+            localStorage.setItem('customProducts', JSON.stringify(savedProducts));
+            renderSavedProducts();
+        }
+
+        function renderSavedProducts() {
+            const list = document.getElementById('savedList');
+            if (savedProducts.length === 0) {
+                list.innerHTML = '<div class="empty-msg">لا توجد منتجات محفوظة بعد</div>';
+                return;
+            }
+            list.innerHTML = savedProducts.map(p => `
+                <div class="saved-item">
+                    <div class="saved-item-info">
+                        <img src="${p.image}" alt="${p.title}">
+                        <div>
+                            <div class="saved-item-title">${p.title.substring(0, 40)}...</div>
+                            <div class="saved-item-price">$${p.price}</div>
+                        </div>
+                    </div>
+                    <button class="saved-item-delete" onclick="deleteProduct(${p.id})" title="حذف">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function resetForm() {
+            document.getElementById('productForm').reset();
+            document.getElementById('pRating').value = '4.5';
+            document.getElementById('pReviews').value = '0';
+        }
+
+        // Init
+        renderSavedProducts();
+    </script>
+</body>
+</html>
