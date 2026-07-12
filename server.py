@@ -45,7 +45,7 @@ class DZExpressHandler(SimpleHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, X-API-Secret")
         self.end_headers()
 
@@ -101,6 +101,34 @@ class DZExpressHandler(SimpleHTTPRequestHandler):
             products = [p for p in products if str(p.get("id")) != pid]
             save_products(products)
             self.send_json({"ok": True})
+            return
+
+        self.send_json({"error": "Not found"}, 404)
+
+    def do_PUT(self):
+        if self.path.startswith("/api/products/"):
+            secret = self.headers.get("X-API-Secret", "")
+            if secret != API_SECRET:
+                self.send_json({"error": "Unauthorized"}, 401)
+                return
+
+            pid = self.path.split("/")[-1]
+            body = self.read_body()
+            if not body:
+                self.send_json({"error": "No body"}, 400)
+                return
+
+            products = load_products()
+            for i, p in enumerate(products):
+                if str(p.get("id")) == pid:
+                    body["id"] = p.get("id")
+                    body["addedAt"] = p.get("addedAt")
+                    products[i] = body
+                    save_products(products)
+                    self.send_json({"ok": True, "product": body})
+                    return
+
+            self.send_json({"error": "Not found"}, 404)
             return
 
         self.send_json({"error": "Not found"}, 404)

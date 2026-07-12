@@ -2,69 +2,6 @@
 const USD_TO_DZD = 135;
 let products = [];
 
-const deals = [
-    {
-        id: 101,
-        title: "آلة إزالة الشعر بالليزر IPL 4 في 1",
-        image: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=400",
-        badge: "خصم 52%",
-        price: 9.33,
-        originalPrice: 19.46,
-        affiliateLink: "https://s.click.aliexpress.com/e/_c3pXxbBv",
-        endsIn: 86400 * 2 + 3600 * 5
-    },
-    {
-        id: 102,
-        title: "جهاز فحص السيارات MUCAR BT200 Max OBD2",
-        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400",
-        badge: "خصم 43%",
-        price: 7.28,
-        originalPrice: 12.68,
-        affiliateLink: "https://s.click.aliexpress.com/e/_c3pXxbBv",
-        endsIn: 86400 + 3600 * 12
-    },
-    {
-        id: 103,
-        title: "قرص خارجي محمول KODAK P190 500GB USB 3.0",
-        image: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=400",
-        badge: "خصم 50%",
-        price: 4.41,
-        originalPrice: 8.84,
-        affiliateLink: "https://s.click.aliexpress.com/e/_c3pXxbBv",
-        endsIn: 3600 * 8 + 1800
-    },
-    {
-        id: 104,
-        title: "ماوس ألعاب لاسلكي ATK A9 Pro 8K",
-        image: "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400",
-        badge: "خصم 52%",
-        price: 3.20,
-        originalPrice: 6.65,
-        affiliateLink: "https://s.click.aliexpress.com/e/_c3pXxbBv",
-        endsIn: 86400 * 3 + 3600 * 2
-    },
-    {
-        id: 105,
-        title: "هاتف Realme 15 Pro 5G بشاشة AMOLED 144Hz",
-        image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400",
-        badge: "جديد",
-        price: 121.50,
-        originalPrice: 121.51,
-        affiliateLink: "https://s.click.aliexpress.com/e/_c3pXxbBv",
-        endsIn: 86400 + 3600 * 6
-    },
-    {
-        id: 106,
-        title: "مجموعة دراجات هوائية رجالي 3D",
-        image: "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=400",
-        badge: "خصم 8%",
-        price: 2.93,
-        originalPrice: 3.19,
-        affiliateLink: "https://s.click.aliexpress.com/e/_c3pXxbBv",
-        endsIn: 3600 * 10 + 1800
-    }
-];
-
 // Category labels in Arabic
 const categoryLabels = {
     all: 'الكل',
@@ -83,10 +20,6 @@ let allProducts = [...products, ...serverProducts];
 
 // DOM Elements
 const productsGrid = document.getElementById('productsGrid');
-const dealsSlider = document.getElementById('dealsSlider');
-const dealsPrev = document.getElementById('dealsPrev');
-const dealsNext = document.getElementById('dealsNext');
-const dealsDots = document.getElementById('dealsDots');
 const searchInput = document.getElementById('searchInput');
 const searchClear = document.getElementById('searchClear');
 const searchBtn = document.getElementById('searchBtn');
@@ -109,8 +42,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     initEventListeners();
     try { await fetchProducts(); } catch(e) {}
-    try { renderDeals(deals); } catch(e) {}
-    startDealTimers();
     initHeroSlideshow();
     initHeroCoupons();
 });
@@ -211,33 +142,6 @@ function renderProducts(productsToRender) {
                 <button class="product-btn product-btn-buy" onclick="openCouponModal(${product.id})">
                     <i class="fas fa-shopping-cart"></i> شراء الآن
                 </button>
-            </div>
-        </div>
-    `).join('');
-}
-
-// Render Deals
-function renderDeals(dealsToRender) {
-    dealsSlider.innerHTML = dealsToRender.map(deal => `
-        <div class="deal-card">
-            <span class="deal-badge">${deal.badge}</span>
-            <img src="${deal.image}" alt="${deal.title}">
-            <div class="deal-info">
-                <h3>${deal.title}</h3>
-                <p class="product-price" style="margin: 15px 0;">
-                    <span class="current-price">$${deal.price.toFixed(2)}</span>
-                    <span class="current-price-dzd">${Math.round(deal.price * USD_TO_DZD)} دج</span>
-                    <span class="original-price">$${deal.originalPrice.toFixed(2)}</span>
-                </p>
-                <div class="deal-timer" data-ends="${deal.endsIn}">
-                    <div class="timer-box"><span class="days">00</span><small>أيام</small></div>
-                    <div class="timer-box"><span class="hours">00</span><small>ساعات</small></div>
-                    <div class="timer-box"><span class="minutes">00</span><small>دقائق</small></div>
-                    <div class="timer-box"><span class="seconds">00</span><small>ثواني</small></div>
-                </div>
-                <a href="${deal.affiliateLink || '#'}" target="_blank" rel="noopener" class="deal-buy-btn">
-                    <i class="fas fa-shopping-cart"></i> شراء الآن
-                </a>
             </div>
         </div>
     `).join('');
@@ -373,9 +277,6 @@ function initEventListeners() {
             closeMobileSearch();
         }
     });
-
-    // Deals carousel
-    initDealsCarousel();
 }
 
 // Mobile Menu
@@ -404,92 +305,6 @@ function closeMobileSearch() {
     mobileSearchInput.value = '';
 }
 
-// Deals Carousel
-let currentSlide = 0;
-let slidesPerView = 3;
-let totalSlides = 0;
-let autoSlideInterval;
-
-function initDealsCarousel() {
-    updateSlidesPerView();
-    totalSlides = deals.length;
-    renderDots();
-    updateCarousel();
-
-    dealsPrev.addEventListener('click', () => {
-        currentSlide = Math.max(0, currentSlide - 1);
-        updateCarousel();
-        resetAutoSlide();
-    });
-
-    dealsNext.addEventListener('click', () => {
-        const maxSlide = Math.max(0, totalSlides - slidesPerView);
-        currentSlide = Math.min(maxSlide, currentSlide + 1);
-        updateCarousel();
-        resetAutoSlide();
-    });
-
-    window.addEventListener('resize', () => {
-        updateSlidesPerView();
-        const maxSlide = Math.max(0, totalSlides - slidesPerView);
-        if (currentSlide > maxSlide) currentSlide = maxSlide;
-        renderDots();
-        updateCarousel();
-    });
-
-    startAutoSlide();
-}
-
-function updateSlidesPerView() {
-    if (window.innerWidth <= 480) {
-        slidesPerView = 1;
-    } else if (window.innerWidth <= 768) {
-        slidesPerView = 2;
-    } else {
-        slidesPerView = 3;
-    }
-}
-
-function updateCarousel() {
-    const cardWidth = dealsSlider.querySelector('.deal-card')?.offsetWidth || 300;
-    const gap = 20;
-    const offset = currentSlide * (cardWidth + gap);
-    dealsSlider.style.transform = `translateX(${offset}px)`;
-
-    document.querySelectorAll('.deals-dots .dot').forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentSlide);
-    });
-}
-
-function renderDots() {
-    const dotCount = Math.max(1, totalSlides - slidesPerView + 1);
-    dealsDots.innerHTML = '';
-    for (let i = 0; i < dotCount; i++) {
-        const dot = document.createElement('button');
-        dot.className = 'dot' + (i === currentSlide ? ' active' : '');
-        dot.addEventListener('click', () => {
-            currentSlide = i;
-            updateCarousel();
-            resetAutoSlide();
-        });
-        dealsDots.appendChild(dot);
-    }
-}
-
-function startAutoSlide() {
-    autoSlideInterval = setInterval(() => {
-        const maxSlide = Math.max(0, totalSlides - slidesPerView);
-        currentSlide = currentSlide >= maxSlide ? 0 : currentSlide + 1;
-        updateCarousel();
-    }, 4000);
-}
-
-function resetAutoSlide() {
-    clearInterval(autoSlideInterval);
-    startAutoSlide();
-}
-
-// Dark Mode Toggle
 // Filter Products
 function filterProducts() {
     const searchTerm = searchInput.value.toLowerCase();
@@ -602,34 +417,6 @@ function toggleWishlist(productId) {
         wishlist.push(productId);
     }
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
-}
-
-// Deal Timers
-function startDealTimers() {
-    const timerElements = document.querySelectorAll('.deal-timer');
-    
-    timerElements.forEach(timer => {
-        let endsIn = parseInt(timer.dataset.ends);
-        
-        const updateTimer = () => {
-            if (endsIn <= 0) return;
-            endsIn--;
-            timer.dataset.ends = endsIn;
-            
-            const days = Math.floor(endsIn / 86400);
-            const hours = Math.floor((endsIn % 86400) / 3600);
-            const minutes = Math.floor((endsIn % 3600) / 60);
-            const seconds = endsIn % 60;
-            
-            timer.querySelector('.days').textContent = String(days).padStart(2, '0');
-            timer.querySelector('.hours').textContent = String(hours).padStart(2, '0');
-            timer.querySelector('.minutes').textContent = String(minutes).padStart(2, '0');
-            timer.querySelector('.seconds').textContent = String(seconds).padStart(2, '0');
-        };
-        
-        updateTimer();
-        setInterval(updateTimer, 1000);
-    });
 }
 
 // Escape key closes modal, mobile menu, and search

@@ -4,7 +4,7 @@
 
 const API_CONFIG = {
     appKey: '502678',
-    appSecret: '79wEXy290DEyur5A7wcpsQ2H8OmwmuFz',
+    appSecret: 'Ds7f3NQm0EpuK5VUsTVKlS3sRnOkkXoH',
     trackingId: 'hixem'
 };
 

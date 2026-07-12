@@ -47,6 +47,10 @@ keyboardStart.add(
 )
 
 keyboard = types.InlineKeyboardMarkup(row_width=1)
+
+# User state tracking for coupon input
+user_states = {}
+pending_products = {}
 keyboard.add(
     types.InlineKeyboardButton("صفحة عرض العملات", url="https://s.click.aliexpress.com/e/_c43Op9M3"),
     types.InlineKeyboardButton("اشترك في القناة", url="https://t.me/aliexpress25c")
@@ -112,20 +116,46 @@ def generate_affiliate_link(product_id):
         return result[0].promotion_link
     except Exception as e:
         print(f"Error generating affiliate link: {e}")
+        return f"https://www.aliexpress.com/item/{product_id}.html?aff_id=hixem"
+
+
+def is_duplicate(product_data):
+    try:
+        resp = requests.get(f"{WEBSITE_URL}/api/products", timeout=5)
+        products = resp.json()
+        for p in products:
+            if p.get('affiliateLink') == product_data.get('affiliateLink'):
+                return p.get('id')
+            if p.get('title') == product_data.get('title') and product_data.get('title') != 'منتج جديد':
+                return p.get('id')
+        return None
+    except Exception:
         return None
 
 
 def post_to_website(product_data):
+    existing_id = is_duplicate(product_data)
     try:
-        resp = requests.post(
-            f"{WEBSITE_URL}/api/products",
-            json=product_data,
-            headers={
-                'Content-Type': 'application/json',
-                'X-API-Secret': API_SECRET
-            },
-            timeout=10
-        )
+        if existing_id:
+            resp = requests.put(
+                f"{WEBSITE_URL}/api/products/{existing_id}",
+                json=product_data,
+                headers={
+                    'Content-Type': 'application/json',
+                    'X-API-Secret': API_SECRET
+                },
+                timeout=10
+            )
+        else:
+            resp = requests.post(
+                f"{WEBSITE_URL}/api/products",
+                json=product_data,
+                headers={
+                    'Content-Type': 'application/json',
+                    'X-API-Secret': API_SECRET
+                },
+                timeout=10
+            )
         result = resp.json()
         print(f"Website API response: {result}")
         return result
@@ -179,9 +209,36 @@ def welcome_user(message):
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
     try:
+        chat_id = message.chat.id
+
+        # Check if waiting for coupon
+        if chat_id in user_states and user_states[chat_id] == 'waiting_coupon':
+            raw_coupon = message.text.strip()
+            if raw_coupon == '0' or not raw_coupon or raw_coupon.startswith('http') or 'aliexpress' in raw_coupon.lower():
+                coupon = ''
+            else:
+                coupon = raw_coupon
+            product_data = pending_products.pop(chat_id, None)
+            user_states.pop(chat_id, None)
+
+            if product_data:
+                result = post_to_website({
+                    **product_data,
+                    'badge': 'جديد',
+                    'coupon': coupon,
+                    'reviews': 0
+                })
+                if result:
+                    bot.send_message(chat_id, f"✅ تم نشر المنتج بنجاح")
+                else:
+                    bot.send_message(chat_id, "❌ حدث خطأ أثناء النشر")
+            else:
+                bot.send_message(chat_id, "حدث خطأ، أرسل الرابط مرة أخرى")
+            return
+
         print(f"Message received: {message.text}")
         link = extract_link(message.text)
-        sent_message = bot.send_message(message.chat.id, 'إنتظر قليلا 😁 ... أنا أبحث عن أفضل العروض 🔎')
+        sent_message = bot.send_message(chat_id, 'إنتظر قليلا 😁 ... أنا أبحث عن أفضل العروض 🔎')
         message_id = sent_message.message_id
         if link and "aliexpress.com" in link and not ("p/shoppingcart" in message.text.lower()):
             if "availableproductshopcartids" in message.text.lower():
@@ -189,8 +246,8 @@ def echo_all(message):
                 return
             get_affiliate_links(message, message_id, link)
         else:
-            bot.delete_message(message.chat.id, message_id)
-            bot.send_message(message.chat.id,
+            bot.delete_message(chat_id, message_id)
+            bot.send_message(chat_id,
                            "الرابط غير صحيح ❌️ تأكد من رابط المنتج.\n"
                            "قم بإرسال الرابط فقط بدون عنوان المنتج",
                            parse_mode='HTML')
@@ -262,32 +319,64 @@ def get_affiliate_links(message, message_id, link):
                     except (ValueError, TypeError):
                         rating = 4.5
 
-                post_to_website({
+                pending_products[message.chat.id] = {
                     'title': title,
                     'shortTitle': shorten_title(title),
                     'image': image_url,
                     'price': price_usd,
                     'originalPrice': original_price,
                     'category': detect_category(title),
-                    'badge': 'جديد',
                     'rating': round(rating, 1),
-                    'reviews': 0,
                     'affiliateLink': affiliate_link,
-                    'coupon': coupon_code,
                     'description': title
-                })
+                }
+                user_states[message.chat.id] = 'waiting_coupon'
+
+                bot.send_message(message.chat.id,
+                    "أرسل لي الكوبون (إن وُجد) أو اكتب 0 إذا لا يوجد كوبون")
             else:
                 bot.delete_message(message.chat.id, message_id)
                 bot.send_message(message.chat.id, f"رابط الشراء: {affiliate_link}", reply_markup=keyboard)
+
+                pending_products[message.chat.id] = {
+                    'title': 'منتج جديد',
+                    'shortTitle': 'منتج جديد',
+                    'image': '',
+                    'price': 0,
+                    'originalPrice': 0,
+                    'category': 'electronics',
+                    'rating': 4.5,
+                    'affiliateLink': affiliate_link,
+                    'description': 'منتج من علي إكسبرس'
+                }
+                user_states[message.chat.id] = 'waiting_coupon'
+                bot.send_message(message.chat.id,
+                    "أرسل لي الكوبون (إن وُجد) أو اكتب 0 إذا لا يوجد كوبون")
 
         except Exception as e:
             print(f"Error fetching product details: {e}")
             bot.delete_message(message.chat.id, message_id)
             bot.send_message(message.chat.id, f"رابط الشراء: {affiliate_link}", reply_markup=keyboard)
 
+            pending_products[message.chat.id] = {
+                'title': 'منتج جديد',
+                'shortTitle': 'منتج جديد',
+                'image': '',
+                'price': 0,
+                'originalPrice': 0,
+                'category': 'electronics',
+                'rating': 4.5,
+                'affiliateLink': affiliate_link,
+                'description': 'منتج من علي إكسبرس'
+            }
+            user_states[message.chat.id] = 'waiting_coupon'
+            bot.send_message(message.chat.id,
+                "أرسل لي الكوبون (إن وُجد) أو اكتب 0 إذا لا يوجد كوبون")
+
     except Exception as e:
-        print(f"Error in get_affiliate_links: {e}")
-        bot.send_message(message.chat.id, "حدث خطأ")
+        print(f"Error in get_affiliate_links: {e}", flush=True)
+        import traceback; traceback.print_exc()
+        bot.send_message(message.chat.id, f"حدث خطأ: {str(e)[:100]}")
 
 
 def get_affiliate_shopcart_link(link, message):
