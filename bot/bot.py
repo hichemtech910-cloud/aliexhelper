@@ -113,7 +113,11 @@ def generate_affiliate_link(product_id):
     try:
         clean_url = f'https://www.aliexpress.com/item/{product_id}.html'
         result = aliexpress.get_affiliate_links(clean_url)
-        return result[0].promotion_link
+        link = result[0].promotion_link
+        # If the returned link is s.click, use direct link with aff_id instead
+        if 's.click.aliexpress.com' in link and 'aff_id=' not in link:
+            return f'https://www.aliexpress.com/item/{product_id}.html?aff_id=hixem'
+        return link
     except Exception as e:
         print(f"Error generating affiliate link: {e}")
         return f"https://www.aliexpress.com/item/{product_id}.html?aff_id=hixem"
