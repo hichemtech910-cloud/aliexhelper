@@ -1032,7 +1032,6 @@ body {
 .products {
     padding: 10px 0 60px;
     position: relative;
-    overflow: hidden;
 }
 
 .products-grid {
@@ -1258,9 +1257,26 @@ body {
 
 /* Ad Banner */
 .ad-banner {
-    padding: 40px 0;
+    padding: 10px 0;
     background: var(--bg-color);
     transition: background 0.3s;
+    overflow: visible;
+}
+
+.ad-banner > * {
+    overflow: visible !important;
+}
+
+.ad-spot {
+    overflow: visible !important;
+    position: relative;
+    z-index: 1;
+}
+
+.ad-spot iframe,
+.ad-spot script,
+.ad-spot div {
+    max-width: 100%;
 }
 
 .ad-banner-inner {
