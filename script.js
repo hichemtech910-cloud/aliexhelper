@@ -224,18 +224,28 @@ function initEventListeners() {
     let lastScroll = 0;
     const header = document.querySelector('.header');
     const categoriesBar = document.querySelector('.categories-bar');
+    let scrollTimeout;
+
     window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
-        if (currentScroll > lastScroll && currentScroll > 100) {
+        if (currentScroll > lastScroll && currentScroll > 80) {
             header.classList.add('header-hidden');
             if (categoriesBar) categoriesBar.classList.add('bar-top');
-        } else {
+        } else if (currentScroll < lastScroll - 5) {
             header.classList.remove('header-hidden');
             if (categoriesBar) categoriesBar.classList.remove('bar-top');
         }
         lastScroll = currentScroll;
-        backToTop.classList.toggle('visible', currentScroll > 500);
-    });
+        backToTop.classList.toggle('visible', currentScroll > 400);
+
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            if (currentScroll < 80) {
+                header.classList.remove('header-hidden');
+                if (categoriesBar) categoriesBar.classList.remove('bar-top');
+            }
+        }, 200);
+    }, { passive: true });
 
     // Dark mode toggle
     const themeToggle = document.getElementById('themeToggle');
@@ -284,19 +294,23 @@ function openMobileMenu() {
     mobileMenuPanel.classList.add('active');
     mobileMenuOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
 }
 
 function closeMobileMenu() {
     mobileMenuPanel.classList.remove('active');
     mobileMenuOverlay.classList.remove('active');
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
 }
 
 // Mobile Search
 function toggleMobileSearch() {
     mobileSearch.classList.toggle('active');
     if (mobileSearch.classList.contains('active')) {
-        mobileSearchInput.focus();
+        setTimeout(() => mobileSearchInput.focus(), 100);
     }
 }
 
@@ -349,11 +363,15 @@ function openProductModal(productId) {
     
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
 }
 
 function closeModal() {
     modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
 }
 
 // Coupon Modal
@@ -384,11 +402,15 @@ function openCouponModal(productId) {
 
     couponModal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
 }
 
 function closeCouponModal() {
     couponModal.classList.remove('active');
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
 }
 
 couponModal.addEventListener('click', (e) => {

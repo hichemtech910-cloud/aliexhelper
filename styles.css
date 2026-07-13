@@ -1732,183 +1732,593 @@ body {
     .modal-body {
         grid-template-columns: 1fr;
     }
+    .modal-content {
+        max-width: 95vw;
+    }
 }
 
 @media (max-width: 768px) {
+    html {
+        font-size: 15px;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+    }
+
+    .container {
+        padding: 0 12px;
+    }
+
     .search-bar {
         display: none;
     }
-    
+
     .nav-links {
         display: none;
     }
-    
+
     .mobile-search-btn {
         display: flex;
     }
-    
+
     .mobile-menu-btn {
         display: block;
     }
-    
-    .hero {
-        padding: 130px 20px 80px;
+
+    .nav {
+        padding: 4px 12px;
     }
-    
+
+    .logo-img {
+        height: 26px;
+    }
+
+    .theme-toggle,
+    .mobile-search-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.95rem;
+    }
+
+    .mobile-menu-btn {
+        font-size: 1.3rem;
+    }
+
+    /* Hero */
+    .hero {
+        height: 380px;
+        margin-top: 40px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
     .hero h1 {
         font-size: 2rem;
     }
-    
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+
     .hero p {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+
+    .btn-primary {
+        padding: 12px 30px;
         font-size: 1rem;
     }
-    
+
+    .countdown-bar {
+        gap: 8px;
+        padding: 8px 16px;
+    }
+
+    .countdown-label {
+        font-size: 11px;
+    }
+
+    .cd-unit {
+        min-width: 32px;
+    }
+
+    .cd-num {
+        font-size: 17px;
+    }
+
+    .cd-tag {
+        font-size: 9px;
+    }
+
+    .cd-sep {
+        font-size: 16px;
+    }
+
+    /* Categories Bar */
     .categories-bar {
-        top: 50px;
+        top: 40px;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
     }
-    
+
+    .categories-bar::-webkit-scrollbar {
+        display: none;
+    }
+
     .categories-grid {
         flex-wrap: nowrap;
         justify-content: flex-start;
-        padding: 0 10px;
+        padding: 0 8px;
+        gap: 6px;
     }
-    
+
     .category-btn {
         flex-shrink: 0;
-        padding: 6px 14px;
+        padding: 5px 12px;
+        font-size: 0.75rem;
+        border-radius: 20px;
+    }
+
+    .category-btn i {
         font-size: 0.8rem;
+    }
+
+    /* Products Grid */
+    .products {
+        padding: 8px 0 40px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .product-card {
+        border-radius: 12px;
+    }
+
+    .product-image {
+        height: 160px;
+    }
+
+    .product-info {
+        padding: 8px 10px 10px;
+    }
+
+    .product-category {
+        font-size: 0.7rem;
+        margin-bottom: 4px;
+    }
+
+    .product-title {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+        line-height: 1.3;
+    }
+
+    .product-rating {
+        margin-bottom: 6px;
+        gap: 3px;
+    }
+
+    .product-rating i {
+        font-size: 0.7rem;
+    }
+
+    .product-rating span {
+        font-size: 0.7rem;
+    }
+
+    .product-price {
+        gap: 5px;
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+    }
+
+    .current-price {
+        font-size: 1rem;
+    }
+
+    .current-price-dzd {
+        font-size: 0.7rem;
+        padding: 1px 4px;
+    }
+
+    .original-price {
+        font-size: 0.75rem;
+    }
+
+    .discount {
+        font-size: 0.65rem;
+        padding: 1px 4px;
+    }
+
+    .product-btn {
+        padding: 8px;
+        font-size: 0.8rem;
+        border-radius: 6px;
+    }
+
+    /* Promo Sign */
+    .promo-sign-inner {
+        padding: 8px 24px;
+    }
+
+    .promo-text {
+        font-size: 1.1rem;
+    }
+
+    /* Search */
+    .products-search {
+        margin-bottom: 20px;
+    }
+
+    .search-input-wrapper {
+        max-width: 100%;
+    }
+
+    /* Ad Banner */
+    .ad-banner {
+        padding: 20px 0;
     }
 
     .ad-banner-inner {
         flex-direction: column;
         text-align: center;
-        padding: 30px 20px;
+        padding: 24px 16px;
     }
 
     .ad-placeholder {
-        width: 150px;
-        height: 90px;
-        font-size: 2.5rem;
+        width: 120px;
+        height: 80px;
+        font-size: 2rem;
     }
-    
-    .category-btn {
-        padding: 6px 14px;
+
+    /* Coupon Modal */
+    .coupon-modal {
+        padding: 12px;
+        align-items: flex-end;
     }
-    
-    .category-btn i {
+
+    .coupon-modal-content {
+        border-radius: 20px 20px 0 0;
+        max-width: 100%;
+        padding: 28px 20px 20px;
+        max-height: 85vh;
+        overflow-y: auto;
+        animation: couponSlideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes couponSlideUp {
+        0% { transform: translateY(100%); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .coupon-icon {
+        width: 56px;
+        height: 56px;
+        font-size: 1.4rem;
+        margin-bottom: 14px;
+    }
+
+    .coupon-modal-content h3 {
+        font-size: 1.1rem;
+    }
+
+    .coupon-code-box {
+        padding: 10px 14px;
+        margin-bottom: 14px;
+    }
+
+    .coupon-code-box span {
+        font-size: 1.1rem;
+    }
+
+    .coupon-go-btn {
+        padding: 12px;
         font-size: 0.9rem;
     }
-    
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+
+    /* Product Modal */
+    .modal {
+        padding: 0;
+        align-items: flex-end;
     }
-    
-    .product-image {
-        height: 180px;
+
+    .modal-content {
+        border-radius: 20px 20px 0 0;
+        max-height: 92vh;
+        animation: couponSlideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    
-    .product-info {
-        padding: 12px;
+
+    .modal-close {
+        top: 10px;
+        left: 16px;
+        font-size: 1.5rem;
     }
-    
-    .product-title {
+
+    .modal-body {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px 16px;
+    }
+
+    .modal-image img {
+        max-height: 250px;
+    }
+
+    .modal-info h2 {
+        font-size: 1.1rem;
+    }
+
+    .modal-price {
+        font-size: 1.4rem;
+    }
+
+    /* Coupon Section */
+    .coupons-section {
+        padding: 16px 0;
+    }
+
+    .coupons-arrow {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+
+    .coupon-pill {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .coupon-pill-amount {
         font-size: 0.95rem;
     }
-    
-    .current-price {
-        font-size: 1.2rem;
+
+    .coupon-pill-code {
+        font-size: 0.8rem;
+        padding: 3px 8px;
     }
-    
-    .product-btn {
-        padding: 10px;
-        font-size: 0.9rem;
+
+    /* Back to Top */
+    .back-to-top {
+        width: 42px;
+        height: 42px;
+        bottom: 20px;
+        left: 20px;
     }
-}
-    
+
     .section-title {
-        font-size: 1.5rem;
-        margin-bottom: 25px;
+        font-size: 1.3rem;
+        margin-bottom: 20px;
     }
-    
+
+    .gradient-transition {
+        height: 30px;
+    }
+
+    /* Hero Coupons */
+    .hero-coupons-top {
+        margin-top: -40px;
+        padding: 6px 0;
+    }
+
+    .hero-coupon-pill {
+        padding: 6px 12px;
+        font-size: 11px;
+        gap: 4px;
+    }
+
+    .hcp-amount {
+        font-size: 13px;
+    }
+
+    .hcp-cond {
+        font-size: 10px;
+    }
+
+    .hcp-code {
+        font-size: 10px;
+        padding: 1px 6px;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 12px 0 8px;
+    }
+
     .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
-    }
-    
-    .newsletter {
-        padding: 50px 0;
-    }
-    
-    .newsletter h2 {
-        font-size: 1.5rem;
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
 }
 
 @media (max-width: 480px) {
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+    html {
+        font-size: 14px;
     }
-    
-    .product-image {
-        height: 150px;
+
+    .hero {
+        height: 320px;
     }
-    
-    .product-info {
-        padding: 10px;
+
+    .hero-title {
+        font-size: 1.6rem;
     }
-    
-    .product-title {
+
+    .hero h1 {
+        font-size: 1.6rem;
+    }
+
+    .hero-subtitle {
         font-size: 0.85rem;
-        margin-bottom: 5px;
     }
-    
-    .product-rating {
-        margin-bottom: 5px;
+
+    .btn-primary {
+        padding: 10px 24px;
+        font-size: 0.9rem;
     }
-    
-    .product-rating span {
+
+    .products-grid {
+        gap: 8px;
+    }
+
+    .product-image {
+        height: 130px;
+    }
+
+    .product-info {
+        padding: 6px 8px 8px;
+    }
+
+    .product-title {
+        font-size: 0.8rem;
+        -webkit-line-clamp: 2;
+    }
+
+    .current-price {
+        font-size: 0.9rem;
+    }
+
+    .current-price-dzd {
+        font-size: 0.65rem;
+    }
+
+    .product-btn {
+        padding: 7px;
         font-size: 0.75rem;
     }
-    
-    .product-price {
+
+    .countdown-bar {
         gap: 5px;
-        margin-bottom: 10px;
+        padding: 6px 12px;
     }
-    
-    .current-price {
-        font-size: 1.1rem;
+
+    .countdown-label {
+        font-size: 10px;
     }
-    
-    .current-price-dzd {
-        font-size: 0.8rem;
-        padding: 1px 5px;
+
+    .cd-num {
+        font-size: 14px;
     }
-    
-    .original-price {
-        font-size: 0.8rem;
+
+    .cd-tag {
+        font-size: 8px;
     }
-    
-    .discount {
-        font-size: 0.7rem;
-        padding: 2px 5px;
+
+    .cd-sep {
+        font-size: 13px;
     }
-    
+
     .mobile-menu-panel {
-        width: 85vw;
-        right: -85vw;
+        width: 80vw;
+        right: -80vw;
     }
-    
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+
+    .modal-content {
+        max-height: 95vh;
     }
-    
+
+    .modal-body {
+        padding: 16px 12px;
+        gap: 14px;
+    }
+
+    .modal-image img {
+        max-height: 200px;
+        border-radius: 12px;
+    }
+
+    .modal-info h2 {
+        font-size: 1rem;
+    }
+
+    .modal-price {
+        font-size: 1.2rem;
+    }
+
+    .modal-description {
+        font-size: 0.85rem;
+    }
+
+    .coupon-modal-content {
+        padding: 24px 16px 16px;
+    }
+
+    .section-title {
+        font-size: 1.15rem;
+    }
+
+    .promo-sign-inner {
+        padding: 6px 18px;
+    }
+
+    .promo-text {
+        font-size: 1rem;
+    }
+
+    .hero-coupons-top {
+        margin-top: -30px;
+    }
+}
+
+/* Touch-friendly: larger tap targets on mobile */
+@media (hover: none) and (pointer: coarse) {
+    .category-btn {
+        min-height: 40px;
+    }
+
+    .product-btn {
+        min-height: 44px;
+    }
+
+    .theme-toggle,
+    .mobile-search-btn,
+    .mobile-menu-btn,
+    .admin-link {
+        min-width: 40px;
+        min-height: 40px;
+    }
+
+    .back-to-top {
+        min-width: 48px;
+        min-height: 48px;
+    }
+
+    .hero-coupon-pill {
+        min-height: 38px;
+    }
+}
+
+/* Landscape phone */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        height: 260px;
+        margin-top: 36px;
+    }
+
+    .hero-title {
+        font-size: 1.4rem;
+    }
+
     .hero h1 {
-        font-size: 1.7rem;
+        font-size: 1.4rem;
+    }
+
+    .countdown-bar {
+        bottom: 30px;
+        padding: 6px 14px;
+    }
+}
+
+/* Smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
     }
 }
 
