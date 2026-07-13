@@ -11,16 +11,13 @@ const API_CONFIG = {
 // دالة تحويل الرابط العادي إلى رابط إحالة
 function toAffiliateLink(url) {
     if (!url || !url.includes('aliexpress.com')) return url;
-    // إذا كان الرابط يحتوي على aff_id فهو رابط إحالة بالفعل
+    // s.click links are already affiliate links from the API
+    if (url.includes('s.click.aliexpress.com')) return url;
+    // aff_id links are already affiliate links
     if (url.includes('aff_id=')) return url;
-    // رابط s.click — نحوله لرابط عادي مع aff_id
-    if (url.includes('s.click.aliexpress.com')) {
-        const match = url.match(/\/item\/(\d+)\.html/);
-        if (match) {
-            return `https://www.aliexpress.com/item/${match[1]}.html?aff_id=hixem`;
-        }
-    }
-    // رابط عادي — نضيف aff_id
+    // aff_platform links are already affiliate links
+    if (url.includes('aff_platform')) return url;
+    // Regular link - add aff_id
     const separator = url.includes('?') ? '&' : '?';
     return url + separator + 'aff_id=hixem';
 }
