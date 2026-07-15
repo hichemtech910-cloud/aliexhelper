@@ -302,5 +302,10 @@
     <script src="script.js"></script>
     <script src="https://pl30338075.effectivecpmnetwork.com/af/c0/c5/afc0c5da1f0fe5351de6bfe2d56647d6.js"></script>
     <script src="https://pl30338140.effectivecpmnetwork.com/57/ab/47/57ab474ab3b61b8fd73fc9830be8caa6.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(function(){});
+    }
+    </script>
 </body>
 </html>
