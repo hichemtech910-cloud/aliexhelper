@@ -20,7 +20,8 @@ load_dotenv()
 TELEGRAM_TOKEN_BOT = os.getenv('TELEGRAM_BOT_TOKEN')
 ALIEXPRESS_API_PUBLIC = os.getenv('ALIEXPRESS_API_PUBLIC')
 ALIEXPRESS_API_SECRET = os.getenv('ALIEXPRESS_API_SECRET')
-WEBSITE_URL = os.getenv('WEBSITE_URL', 'http://localhost:10000')
+WEBSITE_URL = os.getenv('WEBSITE_URL', 'https://aliexhelper.store')
+MINI_APP_URL = os.getenv('MINI_APP_URL', 'https://aliexhelper.store')
 API_SECRET = os.getenv('API_SECRET', 'dzexpress-secret-2024')
 
 if not TELEGRAM_TOKEN_BOT:
@@ -42,6 +43,7 @@ except Exception as e:
 
 keyboardStart = types.InlineKeyboardMarkup(row_width=1)
 keyboardStart.add(
+    types.InlineKeyboardButton("🛒 افتح المتجر", web_app=types.WebAppInfo(url=MINI_APP_URL)),
     types.InlineKeyboardButton("صفحة عرض العملات", url="https://s.click.aliexpress.com/e/_c43Op9M3"),
     types.InlineKeyboardButton("اشترك في القناة", url="https://t.me/aliexpress25c")
 )
@@ -52,6 +54,7 @@ keyboard = types.InlineKeyboardMarkup(row_width=1)
 user_states = {}
 pending_products = {}
 keyboard.add(
+    types.InlineKeyboardButton("🛒 افتح المتجر", web_app=types.WebAppInfo(url=MINI_APP_URL)),
     types.InlineKeyboardButton("صفحة عرض العملات", url="https://s.click.aliexpress.com/e/_c43Op9M3"),
     types.InlineKeyboardButton("اشترك في القناة", url="https://t.me/aliexpress25c")
 )
@@ -200,10 +203,31 @@ def detect_category(title):
 
 @bot.message_handler(commands=['start'])
 def welcome_user(message):
+    menu_markup = types.InlineKeyboardMarkup(row_width=1)
+    menu_markup.add(
+        types.InlineKeyboardButton("🛒 افتح المتجر", web_app=types.WebAppInfo(url=MINI_APP_URL)),
+        types.InlineKeyboardButton("💰 صفحة عرض العملات", url="https://s.click.aliexpress.com/e/_c43Op9M3"),
+        types.InlineKeyboardButton("📢 اشترك في القناة", url="https://t.me/aliexpress25c")
+    )
     bot.send_message(
         message.chat.id,
-        "يرجى إرسال رابط منتج علي إكسبرس، وسأتولى مهمة البحث عن أفضل الأسعار 😁",
-        reply_markup=keyboardStart)
+        "مرحباً بك في <b>aliexhelper</b> 🛍️\n\n"
+        "🛒 اضغط على <b>فتح المتجر</b> للتسوق مباشرة\n"
+        "🔗 أو أرسل رابط منتج علي إكسبرس وسأبحث عن أفضل السعر لك",
+        reply_markup=menu_markup,
+        parse_mode='HTML')
+
+
+@bot.message_handler(commands=['app'])
+def open_app(message):
+    app_markup = types.InlineKeyboardMarkup(row_width=1)
+    app_markup.add(
+        types.InlineKeyboardButton("🛒 افتح المتجر", web_app=types.WebAppInfo(url=MINI_APP_URL))
+    )
+    bot.send_message(
+        message.chat.id,
+        "اضغط الزر لفتح المتجر:",
+        reply_markup=app_markup)
 
 
 @bot.message_handler(func=lambda message: True)

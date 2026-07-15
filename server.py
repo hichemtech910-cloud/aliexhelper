@@ -149,6 +149,8 @@ class DZExpressHandler(SimpleHTTPRequestHandler):
 
     def end_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("X-Frame-Options", "ALLOWALL")
+        self.send_header("Content-Security-Policy", "frame-anceors *")
         super().end_headers()
 
     def log_message(self, format, *args):
