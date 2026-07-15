@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  ninehits:
+    build:
+      context: .
+      dockerfile: ninehits/Dockerfile
+    container_name: ninehits-viewer
+    restart: unless-stopped
+    environment:
+      - NH_ACCESS_KEY=42948cff9e97420a74d54801a3c73077
+    # Note: --network=host is required by 9Hits but not available on Railway
+    # This works on local Docker only
+    network_mode: host
+    shm_size: '2g'
+    stdin_open: true
+    tty: true

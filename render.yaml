@@ -24,3 +24,20 @@ services:
         sync: false
       - key: API_SECRET
         value: dzexpress-secret-2024
+
+  - type: worker
+    name: otohits-surf
+    image: otohits/app:latest
+    envVars:
+      - key: APPLICATION_KEY
+        sync: false
+
+  - type: worker
+    name: ninehits-surf
+    runtime: image
+    image: 9hitste/appv6:latest
+    envVars:
+      - key: NH_ACCESS_KEY
+        value: 42948cff9e97420a74d54801a3c73077
+    # Note: 9Hits requires --network=host which is not supported on Render
+    # This service may need to be deployed on Railway or a VPS instead
