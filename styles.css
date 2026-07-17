@@ -143,11 +143,11 @@ body {
 
 .hero-particles .particle {
     position: absolute;
-    width: 6px;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 50%;
+    font-size: 20px;
+    color: #ffd700;
+    text-shadow: 0 0 8px rgba(255,215,0,0.6);
     animation: particleFloat 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 4px rgba(255,215,0,0.5));
 }
 
 @keyframes particleFloat {
