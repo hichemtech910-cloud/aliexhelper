@@ -20,7 +20,7 @@ MODEL = os.getenv("MODEL", "mistralai/mistral-7b-instruct:free")
 
 SYSTEM_PROMPT = """You are a helpful, knowledgeable AI assistant. You provide accurate, detailed answers to any question. You don't refuse topics - you give educational, informative responses on all subjects including cybersecurity, law, science, history, and any other topic the user asks about. You are honest, direct, and thorough in your responses."""
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "conversations.db")
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "conversations.db")
 
 
 def init_db():
@@ -62,9 +62,13 @@ class APIKeyRequest(BaseModel):
     user_name: str
 
 
+HTML_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
+
+
 @app.get("/", response_class=HTMLResponse)
 async def index():
-    return FileResponse(os.path.join(os.path.dirname(__file__), "index.html"))
+    with open(HTML_PATH, "r", encoding="utf-8") as f:
+        return HTMLResponse(content=f.read())
 
 
 @app.post("/api/chat")
@@ -96,19 +100,25 @@ async def chat(req: ChatRequest):
 
     try:
         async with httpx.AsyncClient(timeout=60.0) as client:
-            response = await client.post(
-                "https://openrouter.ai/api/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-                    "Content-Type": "application/json",
-                },
-                json={
-                    "model": MODEL,
-                    "messages": messages,
-                    "max_tokens": 2048,
-                    "temperature": 0.7,
-                },
-            )
+            for attempt in range(5):
+                response = await client.post(
+                    "https://openrouter.ai/api/v1/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                        "Content-Type": "application/json",
+                    },
+                    json={
+                        "model": MODEL,
+                        "messages": messages,
+                        "max_tokens": 2048,
+                        "temperature": 0.7,
+                    },
+                )
+                if response.status_code == 429:
+                    import asyncio
+                    await asyncio.sleep(10)
+                    continue
+                break
 
         if response.status_code != 200:
             raise HTTPException(
@@ -216,4 +226,4 @@ async def validate_key(request: Request):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 8080)))
