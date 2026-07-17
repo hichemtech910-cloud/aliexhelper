@@ -513,7 +513,7 @@ if (couponsScroll) {
 
 const particlesContainer = document.getElementById('heroParticles');
 if (particlesContainer) {
-    const coins = ['🪙', '💵', '💰', '💲', '💲'];
+    const coins = ['💲'];
     for (let i = 0; i < 20; i++) {
         const p = document.createElement('div');
         p.className = 'particle';
