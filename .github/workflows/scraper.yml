@@ -1,0 +1,28 @@
+name: AliExpress Scraper
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install requests python-dotenv
+
+      - run: python scraper/scraper.py --once
+        env:
+          WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
+          API_SECRET: ${{ secrets.API_SECRET }}
+          ALI_APP_KEY: ${{ secrets.ALI_APP_KEY }}
+          ALI_APP_SECRET: ${{ secrets.ALI_APP_SECRET }}
+          TRACKING_ID: ${{ secrets.TRACKING_ID }}
+          SCRAPE_INTERVAL: ${{ secrets.SCRAPE_INTERVAL }}
+          MAX_PRODUCTS_PER_RUN: ${{ secrets.MAX_PRODUCTS_PER_RUN }}
