@@ -510,33 +510,3 @@ if (couponsScroll) {
         couponsScroll.scrollLeft += scrollDir;
     }, 30);
 }
-
-const particlesContainer = document.getElementById('heroParticles');
-if (particlesContainer) {
-    const coins = ['💲'];
-    for (let i = 0; i < 20; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.textContent = coins[Math.floor(Math.random() * coins.length)];
-        p.style.left = Math.random() * 100 + '%';
-        p.style.top = Math.random() * 100 + '%';
-        p.style.animationDelay = Math.random() * 4 + 's';
-        p.style.animationDuration = (3 + Math.random() * 3) + 's';
-        p.style.fontSize = (16 + Math.random() * 14) + 'px';
-        particlesContainer.appendChild(p);
-    }
-}
-
-document.querySelectorAll('.products, .categories-bar, .footer, .hero-coupons-top').forEach(el => {
-    el.classList.add('fade-in');
-});
-
-const fadeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
