@@ -82,7 +82,7 @@ class DZExpressHandler(SimpleHTTPRequestHandler):
                 if pid:
                     product["aliId"] = pid
 
-            products.append(product)
+            products.insert(0, product)
             save_products(products)
             self.send_json({"ok": True, "product": product})
             return
