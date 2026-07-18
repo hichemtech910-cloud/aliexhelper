@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     initEventListeners();
     try { await fetchProducts(); } catch(e) {}
-    initHeroSlideshow();
     initHeroCoupons();
 });
 
@@ -56,35 +55,6 @@ async function fetchProducts() {
     }
     allProducts = [...products, ...serverProducts];
     renderProducts(allProducts);
-}
-
-// Hero Slideshow
-function initHeroSlideshow() {
-    const slideshow = document.getElementById('heroSlideshow');
-    const heroImages = [
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200",
-        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200",
-        "https://images.unsplash.com/photo-1546868871-af0de0ae72be?w=1200",
-        "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=1200",
-        "https://images.unsplash.com/photo-1585298723682-7115561c51b7?w=1200",
-        "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=1200"
-    ];
-    
-    heroImages.forEach((img, i) => {
-        const slide = document.createElement('div');
-        slide.className = 'slide' + (i === 0 ? ' active' : '');
-        slide.style.backgroundImage = `url(${img})`;
-        slideshow.appendChild(slide);
-    });
-
-    let currentHeroSlide = 0;
-    const slides = slideshow.querySelectorAll('.slide');
-
-    setInterval(() => {
-        slides[currentHeroSlide].classList.remove('active');
-        currentHeroSlide = (currentHeroSlide + 1) % slides.length;
-        slides[currentHeroSlide].classList.add('active');
-    }, 3000);
 }
 
 function initHeroCoupons() {
