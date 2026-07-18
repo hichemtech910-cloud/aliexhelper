@@ -126,37 +126,45 @@ body {
 
 .hero-banner-text-overlay {
     position: absolute;
-    top: 20px;
+    top: 50%;
     left: 40px;
+    transform: translateY(-50%);
     z-index: 2;
     text-align: right;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: 10px 20px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, rgba(191, 0, 0, 0.85), rgba(0, 0, 0, 0.7));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 12px 24px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     animation: fadeInText 1s ease-out;
 }
 
 .hero-banner-text-overlay p {
     margin: 0;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: #fff;
-    line-height: 1.6;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+    line-height: 1.7;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .rakuten-highlight {
-    color: #bf0000;
+    background: linear-gradient(90deg, #ff4444, #ff8800);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     font-weight: 900;
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 .discount-highlight {
-    color: #ffdd57;
-    font-size: 1.1rem;
+    background: linear-gradient(90deg, #ffdd57, #ffaa00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.3rem;
     font-weight: 900;
     text-shadow: 0 0 10px rgba(255, 221, 87, 0.6);
     animation: pulseGlow 2s ease-in-out infinite;
