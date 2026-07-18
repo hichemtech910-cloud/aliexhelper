@@ -1,0 +1,21 @@
+name: Otohits Autosurf
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '*/30 * * * *'  # Every 30 minutes
+
+jobs:
+  surf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Otohits
+        run: |
+          docker run -d \
+            --name otohits \
+            -e APPLICATION_KEY=${{ secrets.APPLICATION_KEY }} \
+            -e SITES=${{ secrets.SITES }} \
+            -e MAX_TABS="3" \
+            --restart always \
+            otohits/app:latest

@@ -1,0 +1,17 @@
+stages:
+  - run
+
+surf:
+  stage: run
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker run -d --name otohits -e APPLICATION_KEY=$APPLICATION_KEY -e SITES=$SITES -e MAX_TABS="3" otohits/app:latest
+    - sleep 3600
+  only:
+    - main
