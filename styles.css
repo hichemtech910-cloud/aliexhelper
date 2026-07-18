@@ -124,6 +124,54 @@ body {
     object-fit: cover;
 }
 
+.hero-banner-text-overlay {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    z-index: 2;
+    text-align: right;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 16px 24px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeInText 1s ease-out;
+}
+
+.hero-banner-text-overlay p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.8;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.rakuten-highlight {
+    color: #bf0000;
+    font-weight: 900;
+    font-size: 1.3rem;
+}
+
+.discount-highlight {
+    color: #ffdd57;
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-shadow: 0 0 10px rgba(255, 221, 87, 0.6);
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes fadeInText {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+    0%, 100% { text-shadow: 0 0 10px rgba(255, 221, 87, 0.6); }
+    50% { text-shadow: 0 0 20px rgba(255, 221, 87, 1); }
+}
+
 .hero-particles {
     display: none;
 }
