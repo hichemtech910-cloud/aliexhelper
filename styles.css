@@ -119,10 +119,11 @@ body {
 }
 
 .hero-banner-bg {
-    width: 100%;
+    width: 200%;
     height: 100%;
     object-fit: cover;
-    object-position: center center;
+    object-position: right center;
+    margin-left: -100%;
 }
 
 .hero-particles {
