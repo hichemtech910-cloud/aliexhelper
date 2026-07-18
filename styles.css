@@ -180,6 +180,38 @@ body {
     50% { text-shadow: 0 0 20px rgba(255, 221, 87, 1); }
 }
 
+.rakuten-cta-btn {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #ff4444, #bf0000);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 50px;
+    text-decoration: none;
+    border: none;
+    box-shadow: 0 4px 15px rgba(191, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    animation: ctaPulse 2s ease-in-out infinite;
+}
+
+.rakuten-cta-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(191, 0, 0, 0.7);
+    background: linear-gradient(135deg, #ff5555, #dd1111);
+    color: #fff;
+}
+
+.rakuten-cta-btn i {
+    margin-left: 6px;
+}
+
+@keyframes ctaPulse {
+    0%, 100% { box-shadow: 0 4px 15px rgba(191, 0, 0, 0.5); }
+    50% { box-shadow: 0 4px 25px rgba(191, 0, 0, 0.8); }
+}
+
 .hero-particles {
     display: none;
 }
