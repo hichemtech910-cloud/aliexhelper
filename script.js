@@ -480,3 +480,37 @@ if (couponsScroll) {
         couponsScroll.scrollLeft += scrollDir;
     }, 30);
 }
+
+// TikTok Slideshow
+const tiktokTrack = document.getElementById('tiktokTrack');
+const tiktokPrev = document.getElementById('tiktokPrev');
+const tiktokNext = document.getElementById('tiktokNext');
+let tiktokIndex = 0;
+const tiktokTotal = document.querySelectorAll('.tiktok-slide').length;
+
+function updateTiktokSlider() {
+    if (!tiktokTrack) return;
+    tiktokTrack.style.transform = `translateX(${tiktokIndex * 100}%)`;
+}
+
+if (tiktokNext) {
+    tiktokNext.addEventListener('click', () => {
+        tiktokIndex = (tiktokIndex + 1) % tiktokTotal;
+        updateTiktokSlider();
+    });
+}
+
+if (tiktokPrev) {
+    tiktokPrev.addEventListener('click', () => {
+        tiktokIndex = (tiktokIndex - 1 + tiktokTotal) % tiktokTotal;
+        updateTiktokSlider();
+    });
+}
+
+// Auto-slide every 5 seconds
+setInterval(() => {
+    if (tiktokTrack) {
+        tiktokIndex = (tiktokIndex + 1) % tiktokTotal;
+        updateTiktokSlider();
+    }
+}, 5000);

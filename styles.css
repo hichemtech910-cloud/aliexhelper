@@ -2585,3 +2585,133 @@ body {
     color: var(--text-muted);
     margin-right: 2px;
 }
+
+/* TikTok Slideshow */
+.tiktok-slideshow {
+    padding: 30px 0;
+    background: var(--bg-color);
+}
+
+.tiktok-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.tiktok-header i.fa-tiktok {
+    font-size: 2rem;
+    color: #000;
+}
+
+body.dark .tiktok-header i.fa-tiktok {
+    color: #fff;
+}
+
+.tiktok-header h2 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+.tiktok-follow-btn {
+    background: #000;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+body.dark .tiktok-follow-btn {
+    background: #fff;
+    color: #000;
+}
+
+.tiktok-follow-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.tiktok-slider {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.tiktok-track {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.tiktok-slide {
+    min-width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.tiktok-slide iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+    border-radius: 12px;
+}
+
+.tiktok-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    z-index: 10;
+}
+
+.tiktok-nav:hover {
+    background: rgba(0,0,0,0.8);
+}
+
+.tiktok-prev {
+    right: 15px;
+}
+
+.tiktok-next {
+    left: 15px;
+}
+
+@media (max-width: 768px) {
+    .tiktok-slide iframe {
+        height: 400px;
+    }
+    .tiktok-header h2 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tiktok-slide iframe {
+        height: 350px;
+    }
+    .tiktok-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+}
