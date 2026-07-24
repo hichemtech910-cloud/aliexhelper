@@ -20,38 +20,20 @@ ALI_APP_SECRET = os.getenv('ALI_APP_SECRET', 'Ds7f3NQm0EpuK5VUsTVKlS3sRnOkkXoH')
 TRACKING_ID = os.getenv('TRACKING_ID', 'hixem')
 WEBSITE_URL = os.getenv('WEBSITE_URL', 'https://aliexhelper.store')
 API_SECRET = os.getenv('API_SECRET', 'dzexpress-secret-2024')
-SHARE_INTERVAL = int(os.getenv('SHARE_INTERVAL', '1800'))
 
-# Search queries
-SEARCH_QUERIES = [
-    'phone accessories',
-    'bluetooth earbuds',
-    'smart watch',
-    'USB cable',
-    'power bank',
-    'phone case',
-    'LED lights',
-    'kitchen gadget',
-    'car accessories',
-    'gaming controller',
-    'wireless mouse',
-    'ring light',
-    'laptop stand',
-    'fitness band',
-    'portable speaker',
-    'charger',
-    'headphone',
-    'keyboard',
-    'selfie stick',
-    'webcam',
-    't-shirt men',
-    'dress women',
-    'shoes',
-    'bag',
-    'sunglasses',
-    'wallet',
-    'jacket',
-    'hat cap',
+# Campaign search queries - various categories from the campaign
+CAMPAIGN_QUERIES = [
+    'phone case', 'earbuds', 'smart watch', 'USB cable', 'power bank',
+    'LED lights', 'kitchen gadget', 'car accessories', 'gaming controller',
+    'wireless mouse', 'ring light', 'laptop stand', 'fitness band',
+    'portable speaker', 'charger', 'headphone', 'keyboard', 'selfie stick',
+    'webcam', 't-shirt', 'dress', 'shoes', 'bag', 'sunglasses', 'wallet',
+    'jacket', 'hat', 'phone holder', 'screen protector', 'camera',
+    'tripod', 'microphone', 'speaker', 'tablet stand', 'mouse pad',
+    'water bottle', 'umbrella', 'watch band', 'ring', 'necklace',
+    'bracelet', 'earring', 'makeup', 'skincare', 'hair dryer',
+    'straightener', 'curling iron', 'flashlight', 'power tool',
+    'drill', 'screwdriver', 'wrench', 'pliers', 'tape measure',
 ]
 
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
@@ -82,7 +64,7 @@ def aliexpress_api_call(method, extra_params=None):
         resp.raise_for_status()
         return resp.json()
     except Exception as e:
-        print(f"API call error: {e}")
+        print(f"API error: {e}")
         return None
 
 
@@ -90,7 +72,7 @@ def search_products(query, page=1):
     params = {
         'keywords': query,
         'tracking_id': TRACKING_ID,
-        'page_size': '10',
+        'page_size': '20',
         'page_no': str(page),
         'target_language': 'AR',
         'target_currency': 'USD',
@@ -107,7 +89,6 @@ def search_products(query, page=1):
     products = products_data.get('products', {})
     product_list = products.get('product', []) if isinstance(products, dict) else []
 
-    print(f"API returned {len(product_list)} products for '{query}'")
     return product_list
 
 
@@ -136,18 +117,11 @@ def detect_category(title):
 
 
 def shorten_title(title):
-    if 'غطاء' in title or 'Funda' in title:
-        if 'آيفون' in title or 'iPhone' in title.lower():
-            return 'غطاء هاتف آيفون'
-        elif 'سامسونج' in title:
-            return 'غطاء هاتف سامسونج'
-        return 'غطاء هاتف'
     words = title.split()
     return ' '.join(words[:4])
 
 
 def post_to_website(product_data):
-    """Post product to website via API"""
     try:
         resp = requests.post(
             f"{WEBSITE_URL}/api/products",
@@ -159,46 +133,19 @@ def post_to_website(product_data):
             timeout=10
         )
         result = resp.json()
-        if result.get('ok'):
-            print(f"Posted to website: {product_data.get('title', '')[:50]}")
-            return True
-        else:
-            print(f"Website API error: {result}")
-            return False
+        return result.get('ok', False)
     except Exception as e:
-        print(f"Error posting to website: {e}")
+        print(f"Website error: {e}")
         return False
 
 
-def share_product():
-    query = random.choice(SEARCH_QUERIES)
-    products = search_products(query)
-
-    if not products:
-        print("No products found")
-        return False
-
-    product = random.choice(products)
-
-    product_id = str(product.get('product_id', ''))
+def share_to_telegram(product, affiliate_link):
     title = product.get('product_title', '')
     image_url = product.get('product_main_image_url', '')
     price = product.get('target_sale_price', '0')
     original_price = product.get('target_original_price', '0')
     discount = product.get('discount', '')
 
-    # Get the promotion_link directly from API (this is the affiliate link!)
-    affiliate_link = product.get('promotion_link', '')
-    if not affiliate_link:
-        affiliate_link = product.get('product_detail_url', f"https://www.aliexpress.com/item/{product_id}.html")
-
-    print(f"Affiliate link: {affiliate_link[:80]}...")
-
-    if not product_id or not title:
-        print("Invalid product data")
-        return False
-
-    # Format message
     category = detect_category(title)
     category_names = {
         'fashion': 'أزياء',
@@ -212,7 +159,6 @@ def share_product():
     price_formatted = format_price(price)
     original_formatted = format_price(original_price)
 
-    # Build caption
     lines = [f"🔥 *{title}*"]
     lines.append("")
     lines.append(f"💰 Price: *{price_formatted}*")
@@ -232,98 +178,112 @@ def share_product():
 
     message = "\n".join(lines)
 
-    # Post to Telegram channel
     try:
         if image_url:
-            bot.send_photo(
-                CHANNEL_ID,
-                image_url,
-                caption=message,
-                parse_mode='Markdown'
-            )
+            bot.send_photo(CHANNEL_ID, image_url, caption=message, parse_mode='Markdown')
         else:
-            bot.send_message(
-                CHANNEL_ID,
-                message,
-                parse_mode='Markdown'
-            )
-        print(f"Shared to Telegram: {title[:50]}...")
+            bot.send_message(CHANNEL_ID, message, parse_mode='Markdown')
+        return True
     except Exception as e:
-        print(f"Error sharing to Telegram: {e}")
+        print(f"Telegram error: {e}")
         return False
 
-    # Post to website
-    try:
-        rating = product.get('evaluation_rate', '4.5')
-        try:
-            rating = min(5.0, max(1.0, float(rating)))
-        except:
-            rating = 4.5
 
-        reviews = product.get('booked_count', '0')
-        try:
-            reviews = int(reviews)
-        except:
-            reviews = 0
-
-        website_data = {
-            'title': title,
-            'shortTitle': shorten_title(title),
-            'image': image_url,
-            'price': float(price) if price else 0,
-            'originalPrice': float(original_price) if original_price else float(price) * 1.5,
-            'category': detect_category(title).split(' ', 1)[-1].lower() if ' ' in detect_category(title) else 'electronics',
-            'rating': round(rating, 1),
-            'reviews': reviews,
-            'affiliateLink': affiliate_link,
-            'description': title,
-            'badge': 'جديد',
-            'coupon': '',
-        }
-        post_to_website(website_data)
-    except Exception as e:
-        print(f"Error posting to website: {e}")
-
-    return True
-
-
-def run_auto_share():
+def share_100_products():
     print(f"\n{'='*60}")
-    print(f"Auto Share Bot - {time.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"Sharing 100 products from campaign")
     print(f"Channel: {CHANNEL_ID}")
-    print(f"Interval: {SHARE_INTERVAL}s ({SHARE_INTERVAL//60} min)")
     print(f"{'='*60}\n")
 
+    all_products = []
     shared = 0
-    max_per_run = 3
+    failed = 0
 
-    for i in range(max_per_run):
-        try:
-            if share_product():
-                shared += 1
-            time.sleep(random.uniform(5, 10))
-        except Exception as e:
-            print(f"Error: {e}")
+    # Get products from various queries
+    queries = random.sample(CAMPAIGN_QUERIES, min(15, len(CAMPAIGN_QUERIES)))
 
-    print(f"\nShared {shared}/{max_per_run} products")
+    for query in queries:
+        if len(all_products) >= 100:
+            break
+
+        print(f"Searching: {query}")
+        products = search_products(query)
+
+        for p in products:
+            if len(all_products) >= 100:
+                break
+
+            product_id = str(p.get('product_id', ''))
+            title = p.get('product_title', '')
+
+            if product_id and title:
+                all_products.append(p)
+
+        time.sleep(0.5)
+
+    print(f"\nCollected {len(all_products)} products")
+    print(f"Starting to share...\n")
+
+    for i, product in enumerate(all_products):
+        if shared >= 100:
+            break
+
+        product_id = str(product.get('product_id', ''))
+        title = product.get('product_title', '')
+        affiliate_link = product.get('promotion_link', '')
+
+        if not affiliate_link:
+            affiliate_link = product.get('product_detail_url', f"https://www.aliexpress.com/item/{product_id}.html")
+
+        print(f"[{shared+1}/100] {title[:50]}...")
+
+        # Share to Telegram
+        if share_to_telegram(product, affiliate_link):
+            shared += 1
+
+            # Post to website
+            try:
+                rating = product.get('evaluation_rate', '4.5')
+                try:
+                    rating = min(5.0, max(1.0, float(rating)))
+                except:
+                    rating = 4.5
+
+                reviews = product.get('booked_count', '0')
+                try:
+                    reviews = int(reviews)
+                except:
+                    reviews = 0
+
+                website_data = {
+                    'title': title,
+                    'shortTitle': shorten_title(title),
+                    'image': product.get('product_main_image_url', ''),
+                    'price': float(product.get('target_sale_price', 0)),
+                    'originalPrice': float(product.get('target_original_price', 0)) or float(product.get('target_sale_price', 0)) * 1.5,
+                    'category': detect_category(title).split(' ', 1)[-1].lower() if ' ' in detect_category(title) else 'electronics',
+                    'rating': round(rating, 1),
+                    'reviews': reviews,
+                    'affiliateLink': affiliate_link,
+                    'description': title,
+                    'badge': 'جديد',
+                    'coupon': '',
+                }
+                post_to_website(website_data)
+            except Exception as e:
+                print(f"Website error: {e}")
+
+            time.sleep(2)
+        else:
+            failed += 1
+            print(f"Failed to share: {title[:50]}")
+
+    print(f"\n{'='*60}")
+    print(f"Done! Shared: {shared}/100, Failed: {failed}")
+    print(f"{'='*60}")
+
     return shared
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == '--once':
-        run_auto_share()
-    else:
-        print("Starting auto-share bot...")
-        print("Press Ctrl+C to stop\n")
-
-        while True:
-            try:
-                run_auto_share()
-                print(f"\nSleeping {SHARE_INTERVAL}s ({SHARE_INTERVAL//60} min)...")
-                time.sleep(SHARE_INTERVAL)
-            except KeyboardInterrupt:
-                print("\nStopped by user")
-                break
-            except Exception as e:
-                print(f"Error: {e}")
-                time.sleep(60)
+    share_100_products()

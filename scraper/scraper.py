@@ -49,7 +49,15 @@ CATEGORIES_MAP = {
     'car': 'gadgets', 'gaming': 'gadgets', 'controller': 'gadgets',
     'mouse': 'gadgets', 'keyboard': 'gadgets', 'ring light': 'gadgets',
     'stand': 'home', 'speaker': 'gadgets', 'fitness': 'gadgets',
-    'portable': 'gadgets',
+    'portable': 'gadgets', 'shirt': 'fashion', 'dress': 'fashion',
+    'shoes': 'fashion', 'bag': 'fashion', 'wallet': 'fashion',
+    'jacket': 'fashion', 'hat': 'fashion', 'sunglasses': 'fashion',
+    'beauty': 'beauty', 'skincare': 'beauty', 'makeup': 'beauty',
+    'cream': 'beauty', 'hair dryer': 'beauty', 'straightener': 'beauty',
+    'pillow': 'home', 'curtain': 'home', 'towel': 'home',
+    'bottle': 'home', 'cup': 'home', 'plate': 'home',
+    'selfie stick': 'gadgets', 'tripod': 'gadgets', 'webcam': 'gadgets',
+    'microphone': 'gadgets', 'camera': 'electronics',
 }
 
 
