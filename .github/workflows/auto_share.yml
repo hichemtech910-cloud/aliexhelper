@@ -1,0 +1,28 @@
+name: Auto Share Bot
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Every 30 minutes
+  workflow_dispatch:
+
+jobs:
+  share:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install requests pyTelegramBotAPI
+
+      - run: python bot/auto_share.py --once
+        env:
+          TELEGRAM_BOT_TOKEN: "8639397827:AAGYU6QP4O9vJsntItmgtB0MARyHwGWoj-0"
+          CHANNEL_ID: "@aliexpress25c"
+          ALI_APP_KEY: "502678"
+          ALI_APP_SECRET: "Ds7f3NQm0EpuK5VUsTVKlS3sRnOkkXoH"
+          TRACKING_ID: "hixem"
+          WEBSITE_URL: "https://aliexhelper.store"
+          API_SECRET: "dzexpress-secret-2024"
