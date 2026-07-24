@@ -68,11 +68,48 @@ def aliexpress_api_call(method, extra_params=None):
         return None
 
 
+def generate_affiliate_link(product_url):
+    """Generate product-specific affiliate link"""
+    try:
+        params = {
+            'method': 'aliexpress.affiliate.link.generate',
+            'app_key': ALI_APP_KEY,
+            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
+            'format': 'json',
+            'v': '2.0',
+            'sign_method': 'md5',
+            'source': 'affiliate_link',
+            'promotion_url': product_url,
+            'tracking_id': TRACKING_ID,
+            'promotion_link_type': '1',
+            'source_values': 'default',
+        }
+        params['sign'] = generate_api_sign(params, ALI_APP_SECRET)
+
+        resp = requests.get("https://api-sg.aliexpress.com/sync", params=params, timeout=30)
+        data = resp.json()
+
+        result = data.get('aliexpress_affiliate_link_generate_response', {})
+        resp_result = result.get('resp_result', {})
+        link_result = resp_result.get('result', {})
+        promotion_links = link_result.get('promotion_links', {}).get('promotion_link', [])
+
+        if promotion_links and len(promotion_links) > 0:
+            link = promotion_links[0].get('promotion_link', '')
+            if link:
+                return link
+
+        return product_url
+    except Exception as e:
+        print(f"Error generating link: {e}")
+        return product_url
+
+
 def search_products(query, page=1):
     params = {
         'keywords': query,
         'tracking_id': TRACKING_ID,
-        'page_size': '20',
+        'page_size': '10',
         'page_no': str(page),
         'target_language': 'AR',
         'target_currency': 'USD',
@@ -228,12 +265,10 @@ def share_100_products():
         if shared >= 100:
             break
 
-        product_id = str(product.get('product_id', ''))
-        title = product.get('product_title', '')
-        affiliate_link = product.get('promotion_link', '')
-
-        if not affiliate_link:
-            affiliate_link = product.get('product_detail_url', f"https://www.aliexpress.com/item/{product_id}.html")
+    product_id = str(product.get('product_id', ''))
+    title = product.get('product_title', '')
+    product_url = product.get('product_detail_url', f"https://www.aliexpress.com/item/{product_id}.html")
+    affiliate_link = generate_affiliate_link(product_url)
 
         print(f"[{shared+1}/100] {title[:50]}...")
 
