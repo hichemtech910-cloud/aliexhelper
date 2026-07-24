@@ -162,29 +162,31 @@
         </div>
     </section>
 
-    <section class="tiktok-slideshow">
-        <div class="container">
-            <div class="tiktok-header">
+    <section class="tiktok-section">
+        <div class="tiktok-container">
+            <div class="tiktok-badge">
                 <i class="fab fa-tiktok"></i>
-                <h2>تابعنا على تيك توك</h2>
-                <a href="https://www.tiktok.com/@hixem_official?lang=en" target="_blank" rel="noopener noreferrer" class="tiktok-follow-btn">
-                    <i class="fab fa-tiktok"></i> متابعة
-                </a>
+                <span>@hixem_official</span>
             </div>
-            <div class="tiktok-slider" id="tiktokSlider">
-                <div class="tiktok-track" id="tiktokTrack">
-                    <div class="tiktok-slide">
+            <div class="tiktok-carousel" id="tiktokCarousel">
+                <div class="tiktok-slides" id="tiktokSlides">
+                    <div class="tiktok-item active">
                         <iframe src="https://www.tiktok.com/embed/v2/7403848288350358790" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
-                    <div class="tiktok-slide">
+                    <div class="tiktok-item">
                         <iframe src="https://www.tiktok.com/embed/v2/7258323648136662277" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
-                    <div class="tiktok-slide">
+                    <div class="tiktok-item">
                         <iframe src="https://www.tiktok.com/embed/v2/7236910887775390981" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
                 </div>
-                <button class="tiktok-nav tiktok-prev" id="tiktokPrev"><i class="fas fa-chevron-right"></i></button>
-                <button class="tiktok-nav tiktok-next" id="tiktokNext"><i class="fas fa-chevron-left"></i></button>
+                <button class="tiktok-arrow tiktok-arrow-right" id="tiktokRight"><i class="fas fa-chevron-right"></i></button>
+                <button class="tiktok-arrow tiktok-arrow-left" id="tiktokLeft"><i class="fas fa-chevron-left"></i></button>
+                <div class="tiktok-dots" id="tiktokDots">
+                    <span class="tiktok-dot active" data-index="0"></span>
+                    <span class="tiktok-dot" data-index="1"></span>
+                    <span class="tiktok-dot" data-index="2"></span>
+                </div>
             </div>
         </div>
     </section>

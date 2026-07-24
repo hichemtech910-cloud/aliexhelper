@@ -2587,96 +2587,88 @@ body {
 }
 
 /* TikTok Slideshow */
-.tiktok-slideshow {
-    padding: 30px 0;
-    background: var(--bg-color);
-}
-
-.tiktok-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.tiktok-header i.fa-tiktok {
-    font-size: 2rem;
-    color: #000;
-}
-
-body.dark .tiktok-header i.fa-tiktok {
-    color: #fff;
-}
-
-.tiktok-header h2 {
-    font-size: 1.5rem;
-    color: var(--text-color);
-    font-weight: 700;
-}
-
-.tiktok-follow-btn {
-    background: #000;
-    color: #fff;
-    padding: 8px 20px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: var(--transition);
-}
-
-body.dark .tiktok-follow-btn {
-    background: #fff;
-    color: #000;
-}
-
-.tiktok-follow-btn:hover {
-    transform: scale(1.05);
-    opacity: 0.9;
-}
-
-.tiktok-slider {
+.tiktok-section {
     position: relative;
+    padding: 20px 0;
+    background: linear-gradient(135deg, #000 0%, #1a1a2e 100%);
     overflow: hidden;
-    border-radius: 16px;
-    max-width: 900px;
+}
+
+.tiktok-container {
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
 }
 
-.tiktok-track {
+.tiktok-badge {
+    position: absolute;
+    top: -15px;
+    right: 30px;
+    background: linear-gradient(135deg, #00f2ea, #ff0050);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 1rem;
     display: flex;
-    transition: transform 0.5s ease;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+    box-shadow: 0 4px 20px rgba(255, 0, 80, 0.4);
+    animation: pulse 2s infinite;
 }
 
-.tiktok-slide {
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.tiktok-badge i {
+    font-size: 1.3rem;
+}
+
+.tiktok-carousel {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.tiktok-slides {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tiktok-item {
     min-width: 100%;
-    padding: 0 10px;
-    box-sizing: border-box;
+    opacity: 0.5;
+    transition: opacity 0.6s ease;
 }
 
-.tiktok-slide iframe {
+.tiktok-item.active {
+    opacity: 1;
+}
+
+.tiktok-item iframe {
     width: 100%;
-    height: 500px;
+    height: 550px;
     border: none;
-    border-radius: 12px;
 }
 
-.tiktok-nav {
+.tiktok-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0,0,0,0.6);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
     color: #fff;
-    border: none;
-    width: 45px;
-    height: 45px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2684,34 +2676,67 @@ body.dark .tiktok-follow-btn {
     z-index: 10;
 }
 
-.tiktok-nav:hover {
-    background: rgba(0,0,0,0.8);
+.tiktok-arrow:hover {
+    background: rgba(255, 0, 80, 0.8);
+    transform: translateY(-50%) scale(1.1);
 }
 
-.tiktok-prev {
-    right: 15px;
+.tiktok-arrow-right { right: 20px; }
+.tiktok-arrow-left { left: 20px; }
+
+.tiktok-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
 }
 
-.tiktok-next {
-    left: 15px;
+.tiktok-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tiktok-dot.active {
+    background: #ff0050;
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(255, 0, 80, 0.6);
 }
 
 @media (max-width: 768px) {
-    .tiktok-slide iframe {
-        height: 400px;
+    .tiktok-item iframe {
+        height: 420px;
     }
-    .tiktok-header h2 {
-        font-size: 1.2rem;
+    .tiktok-badge {
+        font-size: 0.85rem;
+        padding: 8px 15px;
+        right: 20px;
+    }
+    .tiktok-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
     }
 }
 
 @media (max-width: 480px) {
-    .tiktok-slide iframe {
-        height: 350px;
+    .tiktok-item iframe {
+        height: 380px;
     }
-    .tiktok-nav {
+    .tiktok-arrow {
         width: 35px;
         height: 35px;
-        font-size: 1rem;
+    }
+    .tiktok-badge {
+        top: -12px;
+        right: 15px;
+        font-size: 0.75rem;
+        padding: 6px 12px;
     }
 }
