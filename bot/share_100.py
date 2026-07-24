@@ -81,8 +81,8 @@ def generate_affiliate_link(product_url):
             'source': 'affiliate_link',
             'promotion_url': product_url,
             'tracking_id': TRACKING_ID,
-            'promotion_link_type': '1',
-            'source_values': 'default',
+            'promotion_link_type': '2',
+            'source_values': product_url,
         }
         params['sign'] = generate_api_sign(params, ALI_APP_SECRET)
 
@@ -265,10 +265,10 @@ def share_100_products():
         if shared >= 100:
             break
 
-    product_id = str(product.get('product_id', ''))
-    title = product.get('product_title', '')
-    product_url = product.get('product_detail_url', f"https://www.aliexpress.com/item/{product_id}.html")
-    affiliate_link = generate_affiliate_link(product_url)
+        product_id = str(product.get('product_id', ''))
+        title = product.get('product_title', '')
+        product_url = product.get('product_detail_url', f"https://www.aliexpress.com/item/{product_id}.html")
+        affiliate_link = generate_affiliate_link(product_url)
 
         print(f"[{shared+1}/100] {title[:50]}...")
 

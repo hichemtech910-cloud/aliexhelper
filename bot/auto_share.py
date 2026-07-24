@@ -99,8 +99,8 @@ def generate_affiliate_link(product_url):
             'source': 'affiliate_link',
             'promotion_url': product_url,
             'tracking_id': TRACKING_ID,
-            'promotion_link_type': '1',
-            'source_values': 'default',
+            'promotion_link_type': '2',
+            'source_values': product_url,
         }
         params['sign'] = generate_api_sign(params, ALI_APP_SECRET)
 
